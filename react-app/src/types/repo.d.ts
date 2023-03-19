@@ -4,6 +4,15 @@ declare interface SearchResult {
   items: Repo[],
 }
 
+declare interface RepoTest {
+  name: string;
+  description: string;
+  full_name: string;
+  html_url: string;
+  stargazers_count: string;
+  topics: string[];
+}
+
 declare interface Repo {
   id: number;
   node_id: string;

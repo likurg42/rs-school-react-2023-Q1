@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { StarIcon } from '@heroicons/react/24/solid';
 
 interface Props {
-  repo: Repo;
+  repo: Repo | RepoTest;
 }
 
 export default class RepoCard extends React.Component<Props> {
