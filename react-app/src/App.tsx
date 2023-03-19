@@ -1,10 +1,12 @@
 import React, { PropsWithChildren } from 'react';
 import Header from './components/Header/Header';
-import SearchForm from './components/Search/SearchForm';
+import SearchForm from './components/SearchForm/SearchForm';
+import RepoList from './components/RepoList/RepoList';
 
 
 interface State {
   currentLanguage: string;
+  currentKeyword: string;
 }
 
 export default class App extends React.Component<PropsWithChildren, State> {
@@ -13,27 +15,36 @@ export default class App extends React.Component<PropsWithChildren, State> {
     super(props);
     this.state = {
       currentLanguage: localStorage.getItem('currentLanguage') || 'javascript',
+      currentKeyword: localStorage.getItem('currentKeyword') || '',
     };
-    this.setCurrentLanguage = this.setCurrentLanguage.bind(this);
+    this.setCurrentQueryParams = this.setCurrentQueryParams.bind(this);
   }
 
 
-  setCurrentLanguage(language: string) {
+  setCurrentQueryParams(params: { language: string, keyword: string }) {
+    const { language, keyword } = params;
     this.setState(() => ({
       currentLanguage: language,
+      currentKeyword: keyword,
     }));
     localStorage.setItem('currentLanguage', language);
+    localStorage.setItem('currentKeyword', keyword);
   }
 
   render() {
+    const { currentLanguage, currentKeyword } = this.state;
     return (
       <div className="lg:container px-5 py-24 mx-auto text-gray-900">
         <Header>
           <SearchForm
-            setCurrentLanguage={this.setCurrentLanguage}
-            currentLanguage={this.state.currentLanguage}
+            setCurrentLanguage={this.setCurrentQueryParams}
+            currentLanguage={currentLanguage}
+            currentKeyword={currentKeyword}
           />
         </Header>
+        <main>
+          <RepoList currentLanguage={currentLanguage} currentKeyword={currentKeyword}/>
+        </main>
       </div>
     );
   }
