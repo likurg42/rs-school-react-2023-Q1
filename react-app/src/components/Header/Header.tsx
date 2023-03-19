@@ -1,4 +1,5 @@
 import { Component, PropsWithChildren } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class Header extends Component<PropsWithChildren> {
   constructor(props: PropsWithChildren) {
@@ -8,11 +9,11 @@ export default class Header extends Component<PropsWithChildren> {
   render() {
     return (
       <header className="mb-12 flex w-full flex-col text-center">
-        <h1 className="mb-4 text-2xl font-medium title-font sm:text-3xl">
-          Top G&apos;s
-        </h1>
-        <p className="leading-relaxed mb-4">Find awesome repositories on github</p>
-        {this.props.children}
+        <nav className="flex justify-end gap-2 m-4">
+          <Link to="/">Main</Link>
+          <Link to="/about">About</Link>
+        </nav>
+
       </header>
     );
   }
