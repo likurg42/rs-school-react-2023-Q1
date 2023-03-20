@@ -37,7 +37,6 @@ export default class SearchForm extends React.Component<PropsWithChildren<Props>
 
   handleChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
-    console.log(name, value);
     this.setState((s) => ({
       form: { ...s.form, [name]: value },
     }));

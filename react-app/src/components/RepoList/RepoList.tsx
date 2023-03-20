@@ -49,7 +49,6 @@ export default class RepoList extends React.Component<Props, State> {
 
   componentDidMount() {
     const { currentKeyword, currentLanguage } = this.props;
-    console.log(currentLanguage, currentKeyword);
     this.fetchRepos(currentLanguage, currentKeyword);
   }
 
@@ -66,7 +65,6 @@ export default class RepoList extends React.Component<Props, State> {
 
   render() {
     const { repos, fetchStatus } = this.state;
-    console.log(repos);
     return (
       <React.Fragment>
         {fetchStatus === 'loading' && (

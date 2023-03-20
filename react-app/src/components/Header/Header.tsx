@@ -1,19 +1,27 @@
-import { Component, PropsWithChildren } from 'react';
+import { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import { getHeader } from '../../utils/getHeader';
 
-export default class Header extends Component<PropsWithChildren> {
-  constructor(props: PropsWithChildren) {
+interface Props {
+  pathname: string;
+}
+
+export default class Header extends Component<Props> {
+
+  constructor(props: Props) {
     super(props);
   }
 
   render() {
+    const { pathname } = this.props;
     return (
-      <header className="mb-12 flex w-full flex-col text-center">
-        <nav className="flex justify-end gap-2 m-4">
+      <header className="mb-12 flex items-center w-full container mx-auto">
+        <h1 className="text-2xl">{getHeader(pathname)}</h1>
+        <nav className="flex ml-auto justify-end gap-2 m-4">
           <NavLink
             className={({ isActive }) => isActive ? 'underline decoration-2 underline-offset-4' : ''}
             to="/">
-            Main
+            Top G
           </NavLink>
           <NavLink
             className={({ isActive }) => isActive ? 'underline decoration-2 underline-offset-4' : ''}
