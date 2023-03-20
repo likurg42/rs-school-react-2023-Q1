@@ -1,11 +1,11 @@
 import { useLocation } from 'react-router';
 import React from 'react';
 
-interface WithLocationProps {
+export interface WithLocationProps {
   pathname: string;
 }
 
-export function withLocation<T extends WithLocationProps = WithLocationProps>(WrappedComponent: React.ComponentType<T>): React.ComponentType<T> {
+export function withLocation<T extends WithLocationProps = WithLocationProps>(WrappedComponent: React.ComponentType<T>) {
 
   function componentWithLocation(props: Omit<T, keyof WithLocationProps>) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
