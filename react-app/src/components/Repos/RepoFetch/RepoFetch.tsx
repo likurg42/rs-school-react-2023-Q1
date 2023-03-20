@@ -1,5 +1,5 @@
 import React from 'react';
-import RepoCard from '../RepoCard/RepoCard';
+import RepoList from '../RepoList/RepoList';
 
 interface Props {
   currentLanguage: string;
@@ -11,7 +11,7 @@ interface State {
   fetchStatus: 'idle' | 'loading' | 'error',
 }
 
-export default class RepoList extends React.Component<Props, State> {
+export default class RepoFetch extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
@@ -82,15 +82,7 @@ export default class RepoList extends React.Component<Props, State> {
         )}
 
         {fetchStatus === 'idle' && (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {repos.map((repo) => {
-              return (
-                <React.Fragment key={repo.id}>
-                  <RepoCard repo={repo}/>
-                </React.Fragment>
-              );
-            })}
-          </div>
+          <RepoList repos={repos}/>
         )}
 
         {fetchStatus === 'error' && <h2 className="text-center">Nothing was found</h2>}

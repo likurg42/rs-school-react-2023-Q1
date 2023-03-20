@@ -1,8 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import SearchForm from '../../components/SearchForm/SearchForm';
-import RepoList from '../../components/RepoList/RepoList';
 import Hero from '../../components/Hero/Hero';
-
+import Repos from '../../components/Repos/Repos';
 
 interface State {
   currentLanguage: string;
@@ -43,7 +42,7 @@ export default class MainPage extends React.Component<PropsWithChildren, State> 
           />
         </Hero>
         <main>
-          <RepoList currentLanguage={currentLanguage} currentKeyword={currentKeyword}/>
+          <Repos/>
         </main>
       </div>
     );
