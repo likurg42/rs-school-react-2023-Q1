@@ -1,5 +1,5 @@
 import React, { createRef, FormEvent } from 'react';
-import { isAgeUnder18, startsWithCapital } from '../../../utils/validation';
+import { isAgeUnder18, isValidUrl, startsWithCapital } from '../../../utils/validation';
 import { ProfileFormModel } from '../../../types/profileForm.model';
 
 interface Props {
@@ -124,6 +124,10 @@ export default class ProfileForm extends React.Component<Props, State> {
 
     if (githubUrl === '') {
       errors.githubUrl = 'Github link must be provided';
+    }
+
+    if (!isValidUrl(githubUrl)) {
+      errors.githubUrl = 'Link must be valid';
     }
 
     this.setState((state) => ({ ...state, errors: { ...errors } }));
