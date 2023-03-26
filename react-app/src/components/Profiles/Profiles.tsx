@@ -13,17 +13,7 @@ export default class Profiles extends React.Component<unknown, State> {
   constructor(props: unknown) {
     super(props);
     this.state = {
-      profiles: [
-        {
-          id: 'abv',
-          name: 'John Smit',
-          primaryLanguage: 'Javascript',
-          opensource: true,
-          experience: 'Junior',
-          avatarUrl: 'https://picsum.photos/100/100',
-          birthDate: new Date(),
-        },
-      ],
+      profiles: [],
     };
 
     this.addProfile = this.addProfile.bind(this);
@@ -35,7 +25,7 @@ export default class Profiles extends React.Component<unknown, State> {
     const profile = {
       id: genId(),
       ...profileFormValues,
-      opensource: Boolean(opensource),
+      opensource: opensource.toLowerCase() === 'true',
       birthDate: new Date(birthDate),
     };
 

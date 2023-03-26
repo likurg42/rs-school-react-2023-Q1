@@ -15,7 +15,7 @@ export default class ProfilesList extends React.Component<Props> {
     const { profiles } = this.props;
     return (
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {profiles ? profiles.map((profile) => {
+        {profiles && profiles.length > 0 ? profiles.map((profile) => {
           return <React.Fragment key={profile.id}>
             <ProfileCard profile={profile}/>
           </React.Fragment>;

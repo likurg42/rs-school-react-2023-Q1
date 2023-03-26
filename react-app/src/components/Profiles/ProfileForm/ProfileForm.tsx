@@ -3,7 +3,7 @@ import { isAgeUnder18, startsWithCapital } from '../../../utils/validation';
 import { ProfileFormModel } from '../../../types/profileForm.model';
 
 interface Props {
-  submit: (profileFormValues: ProfileFormModel) => void;
+  submit?: (profileFormValues: ProfileFormModel) => void;
 }
 
 interface State {
@@ -76,7 +76,7 @@ export default class ProfileForm extends React.Component<Props, State> {
 
     const isValidated = this.validateForm(profileFormValues);
 
-    if (isValidated) {
+    if (isValidated && this.props.submit) {
       this.showAddedMark();
       this.formRef.current!.reset();
       this.props.submit(profileFormValues);
