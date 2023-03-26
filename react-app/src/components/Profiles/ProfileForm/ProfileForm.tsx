@@ -133,6 +133,14 @@ export default class ProfileForm extends React.Component<Props, State> {
     });
   }
 
+  componentDidUpdate() {
+    if (this.state.isCreated) {
+      setTimeout(() => {
+        this.setState((state) => ({ ...state, isCreated: false }));
+      }, 3000);
+    }
+  }
+
   render() {
     return (
       <form
