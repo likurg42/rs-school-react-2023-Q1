@@ -40,7 +40,7 @@ export default class ProfileForm extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      errors: Object.assign({}, this.initialErrors),
+      errors: { ...this.initialErrors },
       isCreated: false,
     };
 
@@ -83,10 +83,6 @@ export default class ProfileForm extends React.Component<Props, State> {
     }
   }
 
-  resetForm() {
-
-  }
-
   showAddedMark() {
     this.setState((state) => {
       return {
@@ -97,8 +93,6 @@ export default class ProfileForm extends React.Component<Props, State> {
   }
 
   validateForm(profileFormValues: ProfileFormModel): boolean {
-    // age should be at least 18 years old
-    // all input should be
     const { name, birthDate, experience, avatarUrl } = profileFormValues;
 
     const errors = { ...this.initialErrors };
@@ -132,16 +126,6 @@ export default class ProfileForm extends React.Component<Props, State> {
     return Object.values(errors).every((item) => {
       return item === '';
     });
-  }
-
-  setError(key: keyof State['errors'], error: string) {
-    this.setState((state) => ({
-      ...state,
-      errors: {
-        ...state.errors,
-        [key]: error,
-      },
-    }));
   }
 
   render() {
@@ -226,7 +210,7 @@ export default class ProfileForm extends React.Component<Props, State> {
               type="radio"
               name="experience"
               id="experience-middle"
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 "
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
               value="Middle"
               ref={this.experienceMiddleRef}
             />
