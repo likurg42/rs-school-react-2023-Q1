@@ -9,7 +9,8 @@ const setup = () => {
   const birthDate = screen.getByLabelText('Birth Date') as HTMLInputElement;
   const favouriteLanguage = screen.getByLabelText('Favourite Language') as HTMLInputElement;
   const experience = screen.getByLabelText('Junior') as HTMLInputElement;
-  const avatar = screen.getByLabelText('Avatar') as HTMLInputElement;
+  const avatar = screen.getByLabelText('Upload avatar') as HTMLInputElement;
+  const githubUrl = screen.getByLabelText('Github page') as HTMLInputElement;
   const submitBtn = screen.getByRole('button');
   const file = new File(['hello'], 'hello.png', { type: 'image/png' });
 
@@ -24,6 +25,7 @@ const setup = () => {
     avatar,
     submitBtn,
     file,
+    githubUrl,
     ...utils,
   };
 };
@@ -36,16 +38,14 @@ describe('profiles', () => {
   });
 
   it('should add profile', async () => {
-    const { name, birthDate, experience, avatar, submitBtn, file } = setup();
+    const { name, birthDate, experience, avatar, submitBtn, file, githubUrl } = setup();
     fireEvent.change(name, { target: { value: 'John Smitt' } });
     expect(name.value).toBe('John Smitt');
 
     fireEvent.change(birthDate, { target: { value: '1995-01-01' } });
     fireEvent.change(experience, { target: { checked: true } });
-    fireEvent.change(avatar, { target: { value: '' } });
+    fireEvent.change(githubUrl, { target: { value: 'https://github.com' } });
     fireEvent.click(submitBtn);
-
-    screen.queryByText(/Avatar should be chosen/i);
 
     await userEvent.upload(avatar, file);
 

@@ -20,12 +20,17 @@
     "sourceType": "module"
   },
   "plugins": [
-    "@typescript-eslint", "react", "react-hooks"
+    "@typescript-eslint",
+    "react",
+    "react-hooks"
   ],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "comma-dangle": ["error", "only-multiline"],
+    "comma-dangle": [
+      "error",
+      "only-multiline"
+    ],
     "react/prop-types": "off",
     "react/display-name": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
@@ -44,5 +49,8 @@
       "pragma": "React",
       "version": "detect"
     }
-  }
+  },
+  "ignorePatterns": [
+    "**/*.css"
+  ]
 }

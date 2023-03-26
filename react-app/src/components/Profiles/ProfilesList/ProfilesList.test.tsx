@@ -11,6 +11,7 @@ const mockProfile: ProfileModel = {
   experience: 'Junior',
   avatarUrl: 'https://picsum.photos/100/100',
   birthDate: new Date(),
+  githubUrl: 'https://github.com/',
 };
 
 
