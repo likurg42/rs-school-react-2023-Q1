@@ -1,13 +1,9 @@
-export interface ProfileModelName {
-  name: string;
-  birthDate: Date;
-}
-
 export interface ProfileModel {
+  id: string;
   name: string;
   birthDate: Date;
   primaryLanguage: string;
-  work: string;
+  opensource: boolean;
   experience: string;
   avatarUrl: string;
 }

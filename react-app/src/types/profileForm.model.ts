@@ -2,7 +2,7 @@ export interface ProfileFormModel {
   name: string;
   birthDate: string;
   primaryLanguage: string;
-  opensource: boolean;
+  opensource: string;
   experience: string;
   avatarUrl: string;
 }

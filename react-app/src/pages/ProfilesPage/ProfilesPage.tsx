@@ -11,7 +11,6 @@ export default class ProfilesPage extends React.Component<unknown> {
       <div className="mx-auto px-5 text-gray-900 lg:container">
         <div className="flex flex-wrap gap-12">
           <Profiles/>
-          <h2>List</h2>
         </div>
       </div>
     );

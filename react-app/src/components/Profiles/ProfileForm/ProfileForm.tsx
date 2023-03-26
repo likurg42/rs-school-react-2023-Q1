@@ -2,6 +2,10 @@ import React, { createRef, FormEvent } from 'react';
 import { isAgeUnder18, startsWithCapital } from '../../../utils/validation';
 import { ProfileFormModel } from '../../../types/profileForm.model';
 
+interface Props {
+  submit: (profileFormValues: ProfileFormModel) => void;
+}
+
 interface State {
   errors: {
     name: string;
@@ -13,7 +17,7 @@ interface State {
 }
 
 
-export default class ProfileForm extends React.Component<unknown, State> {
+export default class ProfileForm extends React.Component<Props, State> {
   readonly formRef = createRef<HTMLFormElement>();
   readonly nameRef = createRef<HTMLInputElement>();
   readonly birthDateRef = createRef<HTMLInputElement>();
@@ -32,7 +36,7 @@ export default class ProfileForm extends React.Component<unknown, State> {
   };
 
 
-  constructor(props: unknown) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -47,19 +51,21 @@ export default class ProfileForm extends React.Component<unknown, State> {
 
   handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const name = this.nameRef.current!.value;
-    const birthDate = this.birthDateRef.current!.value;
-    const primaryLanguage = this.primaryLanguageRef.current!.value;
-    const opensource = Boolean(this.opensourceRef.current!.value);
     const currentExperienceRef = [
       this.experienceJuniorRef,
       this.experienceMiddleRef,
       this.experienceSeniorRef,
     ].find((el) => el.current!.checked);
-    const experience = currentExperienceRef ? currentExperienceRef.current!.value : '';
-    const avatarUrl = this.avatarUrlRef.current!.value;
+    const { files } = this.avatarUrlRef.current!;
 
-    const profile: ProfileFormModel = {
+    const name = this.nameRef.current!.value;
+    const birthDate = this.birthDateRef.current!.value;
+    const primaryLanguage = this.primaryLanguageRef.current!.value;
+    const opensource = this.opensourceRef.current!.value;
+    const experience = currentExperienceRef ? currentExperienceRef.current!.value : '';
+    const avatarUrl = files && files[0] ? URL.createObjectURL(files[0]) : '';
+
+    const profileFormValues: ProfileFormModel = {
       name,
       birthDate,
       primaryLanguage,
@@ -68,11 +74,12 @@ export default class ProfileForm extends React.Component<unknown, State> {
       avatarUrl,
     };
 
-    const isValidated = this.validateForm(profile);
+    const isValidated = this.validateForm(profileFormValues);
 
     if (isValidated) {
       this.showAddedMark();
       this.formRef.current!.reset();
+      this.props.submit(profileFormValues);
     }
   }
 
@@ -180,10 +187,10 @@ export default class ProfileForm extends React.Component<unknown, State> {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             ref={this.primaryLanguageRef}
           >
-            <option value="javascript">Javascript</option>
-            <option value="java">Java</option>
-            <option value="php">PHP</option>
-            <option value="python">Python</option>
+            <option value="Javascript">Javascript</option>
+            <option value="Java">Java</option>
+            <option value="PHP">PHP</option>
+            <option value="Python">Python</option>
           </select>
         </label>
         <label htmlFor="opensource" className="flex items-center gap-2">
@@ -209,7 +216,7 @@ export default class ProfileForm extends React.Component<unknown, State> {
               name="experience"
               id="experience-junior"
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 "
-              value="junior"
+              value="Junior"
               ref={this.experienceJuniorRef}
             />
             Junior
@@ -220,7 +227,7 @@ export default class ProfileForm extends React.Component<unknown, State> {
               name="experience"
               id="experience-middle"
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 "
-              value="middle"
+              value="Middle"
               ref={this.experienceMiddleRef}
             />
             Middle
@@ -231,7 +238,7 @@ export default class ProfileForm extends React.Component<unknown, State> {
               name="experience"
               id="experience-senior"
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-              value="senior"
+              value="Senior"
               ref={this.experienceSeniorRef}
             />
             Senior
@@ -247,6 +254,7 @@ export default class ProfileForm extends React.Component<unknown, State> {
           </span>
           <input
             type="file"
+            accept="image/*"
             name="avatarUrl"
             id="avatarUrl"
             className="text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 "
