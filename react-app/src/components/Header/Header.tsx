@@ -15,9 +15,9 @@ export default class Header extends Component<Props> {
   render() {
     const { pathname } = this.props;
     return (
-      <header className="mb-12 flex items-center w-full container mx-auto">
+      <header className="container mx-auto mb-12 flex w-full items-center">
         <h1 className="text-2xl">{getHeader(pathname)}</h1>
-        <nav className="flex ml-auto justify-end gap-2 m-4">
+        <nav className="m-4 ml-auto flex justify-end gap-2">
           <NavLink
             className={({ isActive }) => isActive ? 'underline decoration-2 underline-offset-4' : ''}
             to="/">

@@ -71,7 +71,7 @@ export default class RepoFetch extends React.Component<Props, State> {
           <div role="status">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true"
                  viewBox="0 0 100 101"
-                 className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 mx-auto">
+                 className="mx-auto h-8 w-8 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600">
               <path fill="currentColor"
                     d="M100 50.59c0 27.615-22.386 50.001-50 50.001s-50-22.386-50-50 22.386-50 50-50 50 22.386 50 50Zm-90.919 0c0 22.6 18.32 40.92 40.919 40.92 22.599 0 40.919-18.32 40.919-40.92 0-22.598-18.32-40.918-40.919-40.918-22.599 0-40.919 18.32-40.919 40.919Z"/>
               <path fill="currentFill"

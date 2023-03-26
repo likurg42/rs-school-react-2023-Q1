@@ -12,7 +12,7 @@ export default class RepoList extends React.Component<Props> {
 
   render() {
     const { repos } = this.props;
-    return <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    return <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {repos && repos.map((repo) => {
         return (
           <React.Fragment key={repo.id}>

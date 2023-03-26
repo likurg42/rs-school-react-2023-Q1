@@ -46,19 +46,19 @@ export default class SearchForm extends React.Component<PropsWithChildren<Props>
   render() {
     return (
       <form
-        className="lg:w-1/2 mx-auto"
+        className="mx-auto lg:w-1/2"
         onSubmit={this.handleSubmit}
       >
-        <div className="flex gap-2 items-end">
+        <div className="flex items-end gap-2">
           <div className="relative flex-auto text-left">
             <label
-              className="leading-7 text-sm text-gray-600 mb-1 block"
+              className="mb-1 block text-sm leading-7 text-gray-600"
               htmlFor="language"
             >
               Language
             </label>
             <input
-              className="w-full bg-gray-100 bg-opacity-50 rounded border-gray-300 focus:border-indigo-300 focus:bg-white focus:ring-4 focus:ring-indigo-200 text-base outline-none text-gray-600 py-1 px-3 transition-colors duration-200 ease-in-out"
+              className="w-full rounded border-gray-300 bg-gray-100 bg-opacity-50 px-3 py-1 text-base text-gray-600 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-300 focus:bg-white focus:ring-4 focus:ring-indigo-200"
               type="text"
               name="language"
               value={this.state.form.language}
@@ -67,13 +67,13 @@ export default class SearchForm extends React.Component<PropsWithChildren<Props>
           </div>
           <div className="relative flex-auto text-left">
             <label
-              className="leading-7 text-sm text-gray-600 mb-1 block"
+              className="mb-1 block text-sm leading-7 text-gray-600"
               htmlFor="keyword"
             >
               Keyword
             </label>
             <input
-              className="w-full bg-gray-100 bg-opacity-50 rounded border-gray-300 focus:border-indigo-300 focus:bg-white focus:ring-4 focus:ring-indigo-200 text-base outline-none text-gray-600 py-1 px-3 transition-colors duration-200 ease-in-out"
+              className="w-full rounded border-gray-300 bg-gray-100 bg-opacity-50 px-3 py-1 text-base text-gray-600 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-300 focus:bg-white focus:ring-4 focus:ring-indigo-200"
               type="text"
               name="keyword"
               value={this.state.form.keyword}
@@ -81,7 +81,7 @@ export default class SearchForm extends React.Component<PropsWithChildren<Props>
             />
           </div>
           <button
-            className="bg-indigo-900 text-white rounded py-1 px-3 active:scale-105"
+            className="rounded bg-indigo-900 px-3 py-1 text-white active:scale-105"
             type="submit"
           >
             Search

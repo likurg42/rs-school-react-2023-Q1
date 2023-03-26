@@ -33,7 +33,7 @@ export default class MainPage extends React.Component<PropsWithChildren, State> 
   render() {
     const { currentLanguage, currentKeyword } = this.state;
     return (
-      <div className="lg:container px-5 mx-auto text-gray-900">
+      <div className="mx-auto px-5 text-gray-900 lg:container">
         <Hero>
           <SearchForm
             setCurrentLanguage={this.setCurrentQueryParams}

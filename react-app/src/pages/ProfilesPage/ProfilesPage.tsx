@@ -7,7 +7,7 @@ export default class ProfilesPage extends React.Component<unknown> {
 
   render() {
     return (
-      <div className="lg:container px-5 mx-auto text-gray-900">
+      <div className="mx-auto px-5 text-gray-900 lg:container">
         add card page
       </div>
     )

@@ -11,7 +11,7 @@ export default class Hero extends React.Component<PropsWithChildren> {
         <h1 className="mb-4 text-2xl font-medium title-font sm:text-3xl">
           Top G&apos;s
         </h1>
-        <p className="leading-relaxed mb-4">Find awesome repositories on github</p>
+        <p className="mb-4 leading-relaxed">Find awesome repositories on github</p>
         {this.props.children}
       </section>
     );
