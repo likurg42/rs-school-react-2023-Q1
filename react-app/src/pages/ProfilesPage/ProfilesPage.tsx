@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class CreateCardPage extends React.Component<unknown> {
+export default class ProfilesPage extends React.Component<unknown> {
   constructor(props: unknown) {
     super(props);
   }
