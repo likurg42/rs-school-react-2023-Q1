@@ -61,7 +61,7 @@ export default class ProfileForm extends React.Component<Props, State> {
     const name = this.nameRef.current!.value;
     const birthDate = this.birthDateRef.current!.value;
     const primaryLanguage = this.primaryLanguageRef.current!.value;
-    const opensource = this.opensourceRef.current!.value;
+    const opensource = this.opensourceRef.current!.checked;
     const experience = currentExperienceRef ? currentExperienceRef.current!.value : '';
     const avatarUrl = files && files[0] ? URL.createObjectURL(files[0]) : '';
 

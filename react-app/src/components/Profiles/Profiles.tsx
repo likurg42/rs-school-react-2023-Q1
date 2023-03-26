@@ -22,10 +22,10 @@ export default class Profiles extends React.Component<unknown, State> {
   addProfile(profileFormValues: ProfileFormModel): void {
     const { birthDate, opensource } = profileFormValues;
 
+    console.log(opensource);
     const profile = {
       id: genId(),
       ...profileFormValues,
-      opensource: opensource.toLowerCase() === 'true',
       birthDate: new Date(birthDate),
     };
 
