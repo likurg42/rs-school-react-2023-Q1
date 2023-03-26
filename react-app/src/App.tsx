@@ -5,6 +5,7 @@ import AboutPage from './pages/AboutPage/AboutPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import Header from './components/Header/Header';
 import { withLocation } from './hoc/withLocation';
+import CreateCardPage from './pages/CreateCardPage/CreateCardPage';
 
 
 export default class App extends React.Component<unknown> {
@@ -23,6 +24,7 @@ export default class App extends React.Component<unknown> {
           <Route path="/" element={<MainPage/>}/>
           <Route path="/about" element={<AboutPage/>}/>
           <Route path="/*" element={<NotFoundPage/>}/>
+          <Route path="/forms" element={<CreateCardPage/>}/>
         </Routes>
       </BrowserRouter>);
   }
