@@ -14,9 +14,7 @@ export function withLocation<T extends WithLocationProps = WithLocationProps>(Wr
     const locationProps: WithLocationProps = {
       pathname,
     };
-
-    console.log('new pathname', pathname);
-
+    
     return <WrappedComponent {...locationProps} {...(props as T)}/>;
   }
 
