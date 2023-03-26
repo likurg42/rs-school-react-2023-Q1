@@ -25,6 +25,11 @@ export default class Header extends Component<Props> {
           </NavLink>
           <NavLink
             className={({ isActive }) => isActive ? 'underline decoration-2 underline-offset-4' : ''}
+            to="/profiles">
+            Profiles
+          </NavLink>
+          <NavLink
+            className={({ isActive }) => isActive ? 'underline decoration-2 underline-offset-4' : ''}
             to="/about">
             About
           </NavLink>

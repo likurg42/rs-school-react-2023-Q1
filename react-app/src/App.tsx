@@ -24,7 +24,7 @@ export default class App extends React.Component<unknown> {
           <Route path="/" element={<MainPage/>}/>
           <Route path="/about" element={<AboutPage/>}/>
           <Route path="/*" element={<NotFoundPage/>}/>
-          <Route path="/forms" element={<ProfilesPage/>}/>
+          <Route path="/profiles" element={<ProfilesPage/>}/>
         </Routes>
       </BrowserRouter>);
   }
