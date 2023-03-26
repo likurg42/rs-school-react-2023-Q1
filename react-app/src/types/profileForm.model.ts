@@ -5,4 +5,5 @@ export interface ProfileFormModel {
   opensource: boolean;
   experience: string;
   avatarUrl: string;
+  githubUrl: string;
 }

@@ -20,12 +20,12 @@ export default class Profiles extends React.Component<unknown, State> {
   }
 
   addProfile(profileFormValues: ProfileFormModel): void {
-    const { birthDate, opensource } = profileFormValues;
+    const { birthDate, avatarUrl } = profileFormValues;
 
-    console.log(opensource);
     const profile = {
-      id: genId(),
       ...profileFormValues,
+      id: genId(),
+      avatarUrl: avatarUrl === '' ? null : avatarUrl,
       birthDate: new Date(birthDate),
     };
 
@@ -38,11 +38,11 @@ export default class Profiles extends React.Component<unknown, State> {
 
   render() {
     const { profiles } = this.state;
-    return <div className="flex flex-wrap gap-8 md:flex-nowrap md:gap-0">
-      <div className="basis-1/3">
+    return <div className="flex flex-wrap gap-8 sm:flex-nowrap">
+      <div className="basis-full sm:basis-1/4 lg:basis-1/3">
         <ProfileForm submit={this.addProfile}/>
       </div>
-      <div className="basis-2/3 flex-grow">
+      <div className="basis-full flex-grow">
         <ProfilesList profiles={profiles}/>
       </div>
     </div>;

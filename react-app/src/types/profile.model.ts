@@ -5,5 +5,6 @@ export interface ProfileModel {
   primaryLanguage: string;
   opensource: boolean;
   experience: string;
-  avatarUrl: string;
+  avatarUrl: string | null;
+  githubUrl: string;
 }

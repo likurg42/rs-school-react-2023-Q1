@@ -11,7 +11,8 @@ interface State {
     name: string;
     birthDate: string;
     experience: string;
-    avatarUrl: string;
+    githubUrl: string;
+
   };
   isCreated: boolean;
 }
@@ -27,12 +28,14 @@ export default class ProfileForm extends React.Component<Props, State> {
   readonly experienceMiddleRef = createRef<HTMLInputElement>();
   readonly experienceSeniorRef = createRef<HTMLInputElement>();
   readonly avatarUrlRef = createRef<HTMLInputElement>();
+  readonly githubUrlRef = createRef<HTMLInputElement>();
 
   readonly initialErrors = {
     name: '',
     birthDate: '',
     experience: '',
     avatarUrl: '',
+    githubUrl: '',
   };
 
 
@@ -64,6 +67,7 @@ export default class ProfileForm extends React.Component<Props, State> {
     const opensource = this.opensourceRef.current!.checked;
     const experience = currentExperienceRef ? currentExperienceRef.current!.value : '';
     const avatarUrl = files && files[0] ? URL.createObjectURL(files[0]) : '';
+    const githubUrl = this.githubUrlRef.current!.value;
 
     const profileFormValues: ProfileFormModel = {
       name,
@@ -72,6 +76,7 @@ export default class ProfileForm extends React.Component<Props, State> {
       opensource,
       experience,
       avatarUrl,
+      githubUrl,
     };
 
     const isValidated = this.validateForm(profileFormValues);
@@ -93,7 +98,7 @@ export default class ProfileForm extends React.Component<Props, State> {
   }
 
   validateForm(profileFormValues: ProfileFormModel): boolean {
-    const { name, birthDate, experience, avatarUrl } = profileFormValues;
+    const { name, birthDate, experience, githubUrl } = profileFormValues;
 
     const errors = { ...this.initialErrors };
 
@@ -117,8 +122,8 @@ export default class ProfileForm extends React.Component<Props, State> {
       errors.experience = 'Experience must be selected';
     }
 
-    if (avatarUrl === '') {
-      errors.avatarUrl = 'Avatar should be chosen';
+    if (githubUrl === '') {
+      errors.githubUrl = 'Github link must be provided';
     }
 
     this.setState((state) => ({ ...state, errors: { ...errors } }));
@@ -133,11 +138,11 @@ export default class ProfileForm extends React.Component<Props, State> {
       <form
         action="#"
         onSubmit={this.handleSubmit}
-        className="flex flex-col gap-6 items-start"
+        className="flex flex-col gap-6"
         ref={this.formRef}
       >
         <h2>New Profile</h2>
-        <label htmlFor="name" className="flex flex-col w-72">
+        <label htmlFor="name" className="flex flex-col">
           <span className="block mb-2 text-sm font-medium text-gray-900">Name</span>
           <input
             ref={this.nameRef}
@@ -150,7 +155,7 @@ export default class ProfileForm extends React.Component<Props, State> {
             <span className="block text-red-700">{this.state.errors.name}</span>
           )}
         </label>
-        <label htmlFor="birthDate" className="flex flex-col w-72">
+        <label htmlFor="birthDate" className="flex flex-col">
           <span className="block mb-2 text-sm font-medium text-gray-900">Birth Date</span>
           <input
             type="date"
@@ -163,7 +168,7 @@ export default class ProfileForm extends React.Component<Props, State> {
             <span className="text-red-700">{this.state.errors.birthDate}</span>
           )}
         </label>
-        <label htmlFor="primaryLanguage" className="flex flex-col w-72">
+        <label htmlFor="primaryLanguage" className="flex flex-col">
           <span className="block mb-2 text-sm font-medium text-gray-900">Favourite Language</span>
           <select
             name="primaryLanguage"
@@ -231,32 +236,47 @@ export default class ProfileForm extends React.Component<Props, State> {
             <span className="block text-red-700">{this.state.errors.experience}</span>
           )}
         </div>
-        <label htmlFor="avatarUrl" className="flex flex-col  gap-2">
+        <label htmlFor="githubUrl" className="flex flex-col gap-2">
           <span
             className="text-sm font-medium text-gray-900">
-            Avatar
+            Github page
+          </span>
+          <input
+            type="text"
+            name="githubUrl"
+            id="githubUrl"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            ref={this.githubUrlRef}
+          />
+          {this.state.errors.githubUrl && (
+            <span className="text-red-700">{this.state.errors.githubUrl}</span>
+          )}
+        </label>
+        <label htmlFor="avatarUrl"
+               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-pointer text-center">
+          <span
+            className="text-sm font-medium text-gray-900">
+            Upload avatar
           </span>
           <input
             type="file"
             accept="image/*"
             name="avatarUrl"
             id="avatarUrl"
-            className="text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 "
+            className="hidden"
             ref={this.avatarUrlRef}
           />
-          {this.state.errors.avatarUrl && (
-            <span className="text-red-700">{this.state.errors.avatarUrl}</span>
-          )}
         </label>
-        <div className="flex gap-2 items-center">
+
+        <div className="flex flex-col gap-2 items-start">
           <button
             type="submit"
-            className="bg-gray-50 p-3 border rounded-lg border-gray-300 focus:border-blue-500"
+            className="bg-gray-50 p-3 border border-sky-900 rounded-lg border-gray-300 focus:border-blue-500"
           >
             Add Profile
           </button>
           {this.state.isCreated && (
-            <span className="text-green-600">Card is created</span>
+            <p className="text-green-600">Card is created</p>
           )}
         </div>
       </form>
