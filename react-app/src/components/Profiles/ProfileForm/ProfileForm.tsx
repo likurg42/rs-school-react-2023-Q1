@@ -12,7 +12,7 @@ interface State {
     birthDate: string;
     experience: string;
     githubUrl: string;
-
+    avatarUrl: string;
   };
   isCreated: boolean;
 }
@@ -37,7 +37,6 @@ export default class ProfileForm extends React.Component<Props, State> {
     avatarUrl: '',
     githubUrl: '',
   };
-
 
   constructor(props: Props) {
     super(props);
@@ -98,7 +97,7 @@ export default class ProfileForm extends React.Component<Props, State> {
   }
 
   validateForm(profileFormValues: ProfileFormModel): boolean {
-    const { name, birthDate, experience, githubUrl } = profileFormValues;
+    const { name, birthDate, experience, githubUrl, avatarUrl } = profileFormValues;
 
     const errors = { ...this.initialErrors };
 
@@ -120,6 +119,10 @@ export default class ProfileForm extends React.Component<Props, State> {
 
     if (experience === '') {
       errors.experience = 'Experience must be selected';
+    }
+
+    if (avatarUrl === '') {
+      errors.avatarUrl = 'Avatar is required';
     }
 
     if (githubUrl === '') {
@@ -264,22 +267,27 @@ export default class ProfileForm extends React.Component<Props, State> {
             <span className="text-red-700">{this.state.errors.githubUrl}</span>
           )}
         </label>
-        <label htmlFor="avatarUrl"
-               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-pointer text-center">
-          <span
-            className="text-sm font-medium text-gray-900">
-            Upload avatar
-          </span>
-          <input
-            type="file"
-            accept="image/*"
-            name="avatarUrl"
-            id="avatarUrl"
-            className="hidden"
-            ref={this.avatarUrlRef}
-          />
-        </label>
-
+        <div className="flex flex-col gap-2">
+          <label
+            htmlFor="avatarUrl"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-pointer text-center">
+            <span
+              className="text-sm font-medium text-gray-900">
+              Upload avatar
+            </span>
+            <input
+              type="file"
+              accept="image/*"
+              name="avatarUrl"
+              id="avatarUrl"
+              className="hidden"
+              ref={this.avatarUrlRef}
+            />
+          </label>
+          {this.state.errors.avatarUrl && (
+            <span className="block text-red-700">{this.state.errors.avatarUrl}</span>
+          )}
+        </div>
         <div className="flex flex-col gap-2 items-start">
           <button
             type="submit"

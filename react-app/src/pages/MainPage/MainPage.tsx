@@ -9,7 +9,6 @@ interface State {
 }
 
 export default class MainPage extends React.Component<PropsWithChildren, State> {
-
   constructor(props: PropsWithChildren) {
     super(props);
     this.state = {
@@ -19,8 +18,7 @@ export default class MainPage extends React.Component<PropsWithChildren, State> 
     this.setCurrentQueryParams = this.setCurrentQueryParams.bind(this);
   }
 
-
-  setCurrentQueryParams(params: { language: string, keyword: string }) {
+  setCurrentQueryParams(params: { language: string, keyword: string; }) {
     const { language, keyword } = params;
     this.setState(() => ({
       currentLanguage: language,
@@ -42,7 +40,7 @@ export default class MainPage extends React.Component<PropsWithChildren, State> 
           />
         </Hero>
         <main>
-          <Repos/>
+          <Repos />
         </main>
       </div>
     );

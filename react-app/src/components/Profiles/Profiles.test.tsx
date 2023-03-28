@@ -4,7 +4,7 @@ import Profiles from './Profiles';
 import userEvent from '@testing-library/user-event';
 
 const setup = () => {
-  const utils = render(<Profiles/>);
+  const utils = render(<Profiles />);
   const name = screen.getByLabelText('Name') as HTMLInputElement;
   const birthDate = screen.getByLabelText('Birth Date') as HTMLInputElement;
   const favouriteLanguage = screen.getByLabelText('Favourite Language') as HTMLInputElement;
@@ -32,7 +32,7 @@ const setup = () => {
 
 describe('profiles', () => {
   it('should render empty list', () => {
-    render(<Profiles/>);
+    render(<Profiles />);
     const noProfiles = screen.queryByText(/No Profiles/i);
     expect(noProfiles).toBeVisible();
   });
