@@ -1,8 +1,8 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import React from 'react';
 import { MainPage } from './pages/MainPage/MainPage';
-import AboutPage from './pages/AboutPage/AboutPage';
-import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import { AboutPage } from './pages/AboutPage/AboutPage';
+import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage';
 import { Header } from './components/Header/Header';
 import ProfilesPage from './pages/ProfilesPage/ProfilesPage';
 
