@@ -1,10 +1,10 @@
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import React from 'react';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { MainPage } from './pages/MainPage/MainPage';
 import { AboutPage } from './pages/AboutPage/AboutPage';
 import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage';
 import { Header } from './components/Header/Header';
-import ProfilesPage from './pages/ProfilesPage/ProfilesPage';
+import { ProfilesPage } from './pages/ProfilesPage/ProfilesPage';
 
 export const App = () => (
   <BrowserRouter basename={import.meta.env.BASE_URL}>

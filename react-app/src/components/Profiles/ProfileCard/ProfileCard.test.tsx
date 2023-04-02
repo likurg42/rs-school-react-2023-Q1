@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it } from 'vitest';
-import ProfileCard from './ProfileCard';
+import { ProfileCard } from './ProfileCard';
 import { ProfileModel } from '../../../types/profile.model';
 
 const mockProfile: ProfileModel = {

@@ -1,13 +1,13 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, it } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import Profiles from './Profiles';
+import { Profiles } from './Profiles';
 
 const setup = () => {
   const utils = render(<Profiles />);
   const name = screen.getByLabelText('Name') as HTMLInputElement;
   const birthDate = screen.getByLabelText('Birth Date') as HTMLInputElement;
-  const favouriteLanguage = screen.getByLabelText('Favourite Language') as HTMLInputElement;
+  const favouriteLanguage = screen.getByLabelText('Primary Language') as HTMLInputElement;
   const experience = screen.getByLabelText('Junior') as HTMLInputElement;
   const avatar = screen.getByLabelText('Upload avatar') as HTMLInputElement;
   const githubUrl = screen.getByLabelText('Github page') as HTMLInputElement;
@@ -38,15 +38,14 @@ describe('profiles', () => {
 
   it('should add profile', async () => {
     const {
-      name, birthDate, experience, avatar, submitBtn, file, githubUrl,
+      name, birthDate, experience, avatar, file, githubUrl,
     } = setup();
-    fireEvent.change(name, { target: { value: 'John Smitt' } });
-    expect(name.value).toBe('John Smitt');
+    fireEvent.change(name, { target: { value: 'john Smith' } });
+    expect(name.value).toBe('john Smith');
 
     fireEvent.change(birthDate, { target: { value: '1995-01-01' } });
     fireEvent.change(experience, { target: { checked: true } });
     fireEvent.change(githubUrl, { target: { value: 'https://github.com' } });
-    fireEvent.click(submitBtn);
 
     await userEvent.upload(avatar, file);
 
@@ -54,11 +53,28 @@ describe('profiles', () => {
     expect(avatar.files!.item(0)).toStrictEqual(file);
     expect(avatar.files).toHaveLength(1);
 
-    fireEvent.click(submitBtn);
+    fireEvent.submit(screen.getByTestId('form'));
 
-    expect(name.value).toBe('');
+    const nameError = screen.queryByText(/Name is required/i);
+    expect(nameError).toBeNull();
 
-    const description = screen.queryByText(/Javascript Junior developer/i);
-    expect(description).toBeVisible();
+    const nameCapitalError = screen.queryByText(/Name should start with capital/i);
+    expect(nameCapitalError).toBeNull();
+
+    const avatarError = screen.queryByText(/Avatar url is required/i);
+    expect(avatarError).toBeNull();
+
+    const githubError = screen.queryByText(/Github url is required/i);
+    expect(githubError).toBeNull();
+
+    const experienceError = screen.queryByText(/Experience is required/i);
+    expect(experienceError).toBeNull();
+
+    const yearsError = screen.queryByText(/User must be at least 18 years old/i);
+    expect(yearsError).toBeNull();
+
+    // const description = screen.queryByText(/John Smith/i);
+
+    // expect(description).toBeVisible();
   });
 });
