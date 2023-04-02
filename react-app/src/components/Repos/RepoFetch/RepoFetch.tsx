@@ -1,9 +1,10 @@
 import React from 'react';
 import RepoList from '../RepoList/RepoList';
+import { fetchRepositories } from '../../../common/fetchRepositories';
 
 interface Props {
-  currentLanguage: string;
-  currentKeyword: string;
+  currentLanguage?: string;
+  currentKeyword?: string;
 }
 
 interface State {
@@ -12,6 +13,15 @@ interface State {
 }
 
 export default class RepoFetch extends React.Component<Props, State> {
+  // eslint-disable-next-line react/static-property-placement
+  declare readonly props: Props &
+  Required<Pick<Props, keyof typeof RepoFetch.defaultProps>>;
+
+  static defaultProps: Props = {
+    currentLanguage: 'javascript',
+    currentKeyword: 'react',
+  };
+
   constructor(props: Props) {
     super(props);
 
@@ -21,45 +31,42 @@ export default class RepoFetch extends React.Component<Props, State> {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { currentKeyword, currentLanguage } = this.props;
-    this.fetchRepos(currentLanguage, currentKeyword);
+    await this.fetchRepos(currentLanguage, currentKeyword);
   }
 
-  componentDidUpdate(prevProps: Readonly<Props>) {
+  async componentDidUpdate(prevProps: Readonly<Props>) {
     const { currentKeyword, currentLanguage } = this.props;
 
     if (
       prevProps.currentLanguage !== currentLanguage
       || prevProps.currentKeyword !== currentKeyword
     ) {
-      this.fetchRepos(currentLanguage, currentKeyword);
+      await this.fetchRepos(currentLanguage, currentKeyword);
     }
   }
 
   async fetchRepos(language: string, keyword: string) {
     this.setState((state) => ({ ...state, fetchStatus: 'loading' }));
+    let res;
 
     try {
-      const data = await fetch(`https://api.github.com/search/repositories?o=desc&q=${keyword || ''}+language:${language}&sort=stars&page=1&per_page=20`, {
-        headers: {
-          'User-Agent': 'request',
-        },
-      });
+      res = await fetchRepositories(language, keyword);
+    } catch (e) {
+      this.setState(() => ({ repos: [], fetchStatus: 'error' }));
+    }
 
-      if (data.status === 422 || data.status === 403) {
-        throw new Error('Validation Error');
-      }
-
-      const parsedData: SearchResult = await data.json();
-      const { items } = parsedData;
+    if (res?.ok) {
+      const data: SearchResult = await res.json();
+      const { items } = data;
 
       this.setState(() => ({
         repos: items,
         fetchStatus: 'idle',
       }));
-    } catch (e) {
-      this.setState(() => ({ repos: [], fetchStatus: 'error' }));
+    } else {
+      this.setState(() => ({ fetchStatus: 'error' }));
     }
   }
 

@@ -22,7 +22,6 @@ export default class RepoCard extends React.Component<Props> {
         className="flex h-full flex-col items-center justify-center gap-2 overflow-hidden rounded-lg border-2 border-gray-200 border-opacity-60 bg-gray-100 bg-opacity-75 p-4"
       >
         <p className="flex flex-wrap justify-center gap-2">
-          +
           {topics && topics.map((topic) => (
             <span
               className="text-xs font-medium tracking-widest text-gray-400 title-font"

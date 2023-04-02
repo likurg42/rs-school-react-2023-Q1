@@ -13,7 +13,7 @@ export default class MainPage extends React.Component<PropsWithChildren, State> 
     super(props);
     this.state = {
       currentLanguage: localStorage.getItem('currentLanguage') || 'javascript',
-      currentKeyword: localStorage.getItem('currentKeyword') || '',
+      currentKeyword: localStorage.getItem('currentKeyword') || 'react',
     };
     this.setCurrentQueryParams = this.setCurrentQueryParams.bind(this);
   }
@@ -40,7 +40,10 @@ export default class MainPage extends React.Component<PropsWithChildren, State> 
           />
         </Hero>
         <main>
-          <Repos />
+          <Repos
+            currentLanguage={currentLanguage}
+            currentKeyword={currentKeyword}
+          />
         </main>
       </div>
     );

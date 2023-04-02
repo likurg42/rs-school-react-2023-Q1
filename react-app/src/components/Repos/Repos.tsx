@@ -1,8 +1,14 @@
 import React from 'react';
 import RepoFetch from './RepoFetch/RepoFetch';
 
-export default class Repos extends React.Component<unknown> {
+interface Props {
+  currentLanguage: string,
+  currentKeyword: string,
+}
+
+export default class Repos extends React.Component<Props> {
   render() {
-    return <RepoFetch currentLanguage="javascript" currentKeyword="" />;
+    const { currentKeyword, currentLanguage } = this.props;
+    return <RepoFetch currentLanguage={currentLanguage} currentKeyword={currentKeyword} />;
   }
 }
