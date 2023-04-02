@@ -12,7 +12,7 @@
     "type-lint": "npx tsc",
     "test": "vitest run",
     "coverage": "vitest run --coverage",
-    "pre-commit": "npm run eslint && npm run type-lint & npm run test"
+    "pre-commit": "npm run eslint && npm run type-lint && npm run test"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.16",
