@@ -31,8 +31,10 @@ export default class SearchForm extends React.Component<PropsWithChildren<Props>
 
   handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const { language, keyword } = this.state.form;
-    this.props.setCurrentLanguage({ language, keyword });
+    const { setCurrentLanguage } = this.props;
+    const { form } = this.state;
+    const { language, keyword } = form;
+    setCurrentLanguage({ language, keyword });
   }
 
   handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -44,6 +46,7 @@ export default class SearchForm extends React.Component<PropsWithChildren<Props>
   }
 
   render() {
+    const { form } = this.state;
     return (
       <form
         className="mx-auto lg:w-1/2"
@@ -56,14 +59,15 @@ export default class SearchForm extends React.Component<PropsWithChildren<Props>
               htmlFor="language"
             >
               Language
+              <input
+                className="w-full rounded border-gray-300 bg-gray-100 bg-opacity-50 px-3 py-1 text-base text-gray-600 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-300 focus:bg-white focus:ring-4 focus:ring-indigo-200"
+                type="text"
+                name="language"
+                id="language"
+                value={form.language}
+                onChange={this.handleChange}
+              />
             </label>
-            <input
-              className="w-full rounded border-gray-300 bg-gray-100 bg-opacity-50 px-3 py-1 text-base text-gray-600 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-300 focus:bg-white focus:ring-4 focus:ring-indigo-200"
-              type="text"
-              name="language"
-              value={this.state.form.language}
-              onChange={this.handleChange}
-            />
           </div>
           <div className="relative flex-auto text-left">
             <label
@@ -71,14 +75,15 @@ export default class SearchForm extends React.Component<PropsWithChildren<Props>
               htmlFor="keyword"
             >
               Keyword
+              <input
+                className="w-full rounded border-gray-300 bg-gray-100 bg-opacity-50 px-3 py-1 text-base text-gray-600 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-300 focus:bg-white focus:ring-4 focus:ring-indigo-200"
+                type="text"
+                name="keyword"
+                id="keyword"
+                value={form.keyword}
+                onChange={this.handleChange}
+              />
             </label>
-            <input
-              className="w-full rounded border-gray-300 bg-gray-100 bg-opacity-50 px-3 py-1 text-base text-gray-600 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-300 focus:bg-white focus:ring-4 focus:ring-indigo-200"
-              type="text"
-              name="keyword"
-              value={this.state.form.keyword}
-              onChange={this.handleChange}
-            />
           </div>
           <button
             className="rounded bg-indigo-900 px-3 py-1 text-white active:scale-105"

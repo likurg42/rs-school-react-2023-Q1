@@ -1,17 +1,13 @@
 import { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { getHeader } from '../../utils/getHeader';
+import { withLocation } from '../../hoc/withLocation';
 
 interface Props {
   pathname: string;
 }
 
-export default class Header extends Component<Props> {
-
-  constructor(props: Props) {
-    super(props);
-  }
-
+class Header extends Component<Props> {
   render() {
     const { pathname } = this.props;
     return (
@@ -19,18 +15,21 @@ export default class Header extends Component<Props> {
         <h1 className="text-2xl">{getHeader(pathname)}</h1>
         <nav className="m-4 ml-auto flex justify-end gap-2">
           <NavLink
-            className={({ isActive }) => isActive ? 'underline decoration-2 underline-offset-4' : ''}
-            to="/">
+            className={({ isActive }) => (isActive ? 'underline decoration-2 underline-offset-4' : '')}
+            to="/"
+          >
             Top G
           </NavLink>
           <NavLink
-            className={({ isActive }) => isActive ? 'underline decoration-2 underline-offset-4' : ''}
-            to="/profiles">
+            className={({ isActive }) => (isActive ? 'underline decoration-2 underline-offset-4' : '')}
+            to="/profiles"
+          >
             Profiles
           </NavLink>
           <NavLink
-            className={({ isActive }) => isActive ? 'underline decoration-2 underline-offset-4' : ''}
-            to="/about">
+            className={({ isActive }) => (isActive ? 'underline decoration-2 underline-offset-4' : '')}
+            to="/about"
+          >
             About
           </NavLink>
         </nav>
@@ -38,3 +37,5 @@ export default class Header extends Component<Props> {
     );
   }
 }
+
+export default withLocation(Header);

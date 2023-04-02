@@ -14,10 +14,9 @@ const mockProfile: ProfileModel = {
   githubUrl: 'https://github.com/',
 };
 
-
 describe('profile card', () => {
   it('should render profile card', () => {
-    render(<ProfileCard profile={mockProfile}/>);
+    render(<ProfileCard profile={mockProfile} />);
     const name = screen.queryByText(/John smitt/i);
     expect(name).toBeVisible();
   });

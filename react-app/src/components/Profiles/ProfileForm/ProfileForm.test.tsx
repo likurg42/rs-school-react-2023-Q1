@@ -4,7 +4,7 @@ import ProfileForm from './ProfileForm';
 
 describe('profile form', () => {
   it('should not submit', () => {
-    render(<ProfileForm/>);
+    render(<ProfileForm />);
 
     const button = screen.getByRole('button');
     fireEvent.click(button);

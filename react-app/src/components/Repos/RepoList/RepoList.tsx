@@ -6,21 +6,16 @@ interface Props {
 }
 
 export default class RepoList extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-
   render() {
     const { repos } = this.props;
-    return <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {repos && repos.map((repo) => {
-        return (
+    return (
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {repos && repos.map((repo) => (
           <React.Fragment key={repo.id}>
-            <RepoCard repo={repo}/>
+            <RepoCard repo={repo} />
           </React.Fragment>
-        );
-      })}
-    </div>;
-
+        ))}
+      </div>
+    );
   }
 }

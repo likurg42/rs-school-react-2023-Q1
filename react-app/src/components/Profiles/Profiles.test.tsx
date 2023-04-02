@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, it } from 'vitest';
-import Profiles from './Profiles';
 import userEvent from '@testing-library/user-event';
+import Profiles from './Profiles';
 
 const setup = () => {
   const utils = render(<Profiles />);
@@ -15,7 +15,6 @@ const setup = () => {
   const file = new File(['hello'], 'hello.png', { type: 'image/png' });
 
   global.URL.createObjectURL = () => 'test url';
-
 
   return {
     name,
@@ -38,7 +37,9 @@ describe('profiles', () => {
   });
 
   it('should add profile', async () => {
-    const { name, birthDate, experience, avatar, submitBtn, file, githubUrl } = setup();
+    const {
+      name, birthDate, experience, avatar, submitBtn, file, githubUrl,
+    } = setup();
     fireEvent.change(name, { target: { value: 'John Smitt' } });
     expect(name.value).toBe('John Smitt');
 

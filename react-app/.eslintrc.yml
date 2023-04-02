@@ -1,0 +1,69 @@
+---
+parser: "@typescript-eslint/parser"
+extends:
+  - plugin:react/recommended
+  - plugin:@typescript-eslint/recommended
+  - plugin:react-hooks/recommended
+  - airbnb
+  - airbnb-typescript
+  - airbnb/hooks
+env:
+  browser: true
+  es6: true
+  jest: true
+  node: true
+root: true
+parserOptions:
+  ecmaFeatures:
+    jsx: true
+  ecmaVersion: latest
+  sourceType: module
+  project: './tsconfig.json'
+plugins:
+  - "@typescript-eslint"
+  - react
+  - react-hooks
+rules:
+  comma-dangle:
+    - error
+    - only-multiline
+  # React Rules
+  react/prop-types: 'off'
+  react/display-name: 'off'
+  react/jsx-uses-react: 'off'
+  react/react-in-jsx-scope: 'off'
+  react/prefer-stateless-function: 'off'
+  # defaultProps deprecated so if you use classes just use static
+  react/static-property-placement:
+    - error
+    - 'static public field'
+  # Imports Rules
+  import/extensions:
+    - error
+    - ignorePackages
+    - js: never
+      jsx: never
+      ts: never
+      tsx: never
+  import/prefer-default-export: off
+  # Typescript Rules
+  "@typescript-eslint/explicit-function-return-type": 'off'
+  "@typescript-eslint/interface-name-prefix": 'off'
+  "@typescript-eslint/ban-ts-comment": error
+  "@typescript-eslint/no-non-null-assertion": 'off'
+  "@typescript-eslint/explicit-module-boundary-types": 'off'
+  "@typescript-eslint/no-empty-function": 'off'
+  "@typescript-eslint/no-explicit-any": error
+  "@typescript-eslint/no-var-requires": 'off'
+  "@typescript-eslint/naming-convention": off
+settings:
+  react:
+    pragma: React
+    version: detect
+ignorePatterns:
+  - "**/*.css"
+  - "node_modules"
+  - "dist"
+  - "coverage"
+  - "dist"
+...

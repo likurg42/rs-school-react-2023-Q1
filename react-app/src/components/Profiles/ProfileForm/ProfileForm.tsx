@@ -1,4 +1,5 @@
 import React, { createRef, FormEvent } from 'react';
+import clsx from 'clsx';
 import { isAgeUnder18, isValidUrl, startsWithCapital } from '../../../utils/validation';
 import { ProfileFormModel } from '../../../types/profileForm.model';
 
@@ -17,18 +18,30 @@ interface State {
   isCreated: boolean;
 }
 
-
 export default class ProfileForm extends React.Component<Props, State> {
   readonly formRef = createRef<HTMLFormElement>();
+
   readonly nameRef = createRef<HTMLInputElement>();
+
   readonly birthDateRef = createRef<HTMLInputElement>();
+
   readonly primaryLanguageRef = createRef<HTMLSelectElement>();
+
   readonly opensourceRef = createRef<HTMLInputElement>();
+
   readonly experienceJuniorRef = createRef<HTMLInputElement>();
+
   readonly experienceMiddleRef = createRef<HTMLInputElement>();
+
   readonly experienceSeniorRef = createRef<HTMLInputElement>();
+
   readonly avatarUrlRef = createRef<HTMLInputElement>();
+
   readonly githubUrlRef = createRef<HTMLInputElement>();
+
+  static defaultProps = {
+    submit: () => null,
+  };
 
   readonly initialErrors = {
     name: '',
@@ -51,8 +64,20 @@ export default class ProfileForm extends React.Component<Props, State> {
     this.showAddedMark = this.showAddedMark.bind(this);
   }
 
+  componentDidUpdate() {
+    const { isCreated } = this.state;
+    if (isCreated) {
+      setTimeout(() => {
+        this.setState((state) => ({ ...state, isCreated: false }));
+      }, 3000);
+    }
+  }
+
   handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const {
+      submit = () => null,
+    } = this.props;
     const currentExperienceRef = [
       this.experienceJuniorRef,
       this.experienceMiddleRef,
@@ -80,24 +105,24 @@ export default class ProfileForm extends React.Component<Props, State> {
 
     const isValidated = this.validateForm(profileFormValues);
 
-    if (isValidated && this.props.submit) {
+    if (isValidated && submit) {
       this.showAddedMark();
       this.formRef.current!.reset();
-      this.props.submit(profileFormValues);
+      submit(profileFormValues);
     }
   }
 
   showAddedMark() {
-    this.setState((state) => {
-      return {
-        ...state,
-        isCreated: true,
-      };
-    });
+    this.setState((state) => ({
+      ...state,
+      isCreated: true,
+    }));
   }
 
   validateForm(profileFormValues: ProfileFormModel): boolean {
-    const { name, birthDate, experience, githubUrl, avatarUrl } = profileFormValues;
+    const {
+      name, birthDate, experience, githubUrl, avatarUrl,
+    } = profileFormValues;
 
     const errors = { ...this.initialErrors };
 
@@ -135,20 +160,11 @@ export default class ProfileForm extends React.Component<Props, State> {
 
     this.setState((state) => ({ ...state, errors: { ...errors } }));
 
-    return Object.values(errors).every((item) => {
-      return item === '';
-    });
-  }
-
-  componentDidUpdate() {
-    if (this.state.isCreated) {
-      setTimeout(() => {
-        this.setState((state) => ({ ...state, isCreated: false }));
-      }, 3000);
-    }
+    return Object.values(errors).every((item) => item === '');
   }
 
   render() {
+    const { errors, isCreated } = this.state;
     return (
       <form
         action="#"
@@ -164,10 +180,15 @@ export default class ProfileForm extends React.Component<Props, State> {
             type="text"
             name="name"
             id="name"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            className={clsx(
+              'block w-full p-2.5',
+              'text-gray-900 text-sm',
+              'bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500',
+              'focus:border-blue-500',
+            )}
           />
-          {this.state.errors.name && (
-            <span className="block text-red-700">{this.state.errors.name}</span>
+          {errors.name && (
+            <span className="block text-red-700">{errors.name}</span>
           )}
         </label>
         <label htmlFor="birthDate" className="flex flex-col">
@@ -179,8 +200,8 @@ export default class ProfileForm extends React.Component<Props, State> {
             ref={this.birthDateRef}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           />
-          {this.state.errors.birthDate && (
-            <span className="text-red-700">{this.state.errors.birthDate}</span>
+          {errors.birthDate && (
+            <span className="text-red-700">{errors.birthDate}</span>
           )}
         </label>
         <label htmlFor="primaryLanguage" className="flex flex-col">
@@ -206,7 +227,10 @@ export default class ProfileForm extends React.Component<Props, State> {
             ref={this.opensourceRef}
           />
           <span
-            className="text-sm font-medium text-gray-900">Contributing to open source</span>
+            className="text-sm font-medium text-gray-900"
+          >
+            Contributing to open source
+          </span>
         </label>
         <div className="">
           <span
@@ -247,13 +271,14 @@ export default class ProfileForm extends React.Component<Props, State> {
             />
             Senior
           </label>
-          {this.state.errors.experience && (
-            <span className="block text-red-700">{this.state.errors.experience}</span>
+          {errors.experience && (
+            <span className="block text-red-700">{errors.experience}</span>
           )}
         </div>
         <label htmlFor="githubUrl" className="flex flex-col gap-2">
           <span
-            className="text-sm font-medium text-gray-900">
+            className="text-sm font-medium text-gray-900"
+          >
             Github page
           </span>
           <input
@@ -263,16 +288,18 @@ export default class ProfileForm extends React.Component<Props, State> {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             ref={this.githubUrlRef}
           />
-          {this.state.errors.githubUrl && (
-            <span className="text-red-700">{this.state.errors.githubUrl}</span>
+          {errors.githubUrl && (
+            <span className="text-red-700">{errors.githubUrl}</span>
           )}
         </label>
         <div className="flex flex-col gap-2">
           <label
             htmlFor="avatarUrl"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-pointer text-center">
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-pointer text-center"
+          >
             <span
-              className="text-sm font-medium text-gray-900">
+              className="text-sm font-medium text-gray-900"
+            >
               Upload avatar
             </span>
             <input
@@ -284,18 +311,22 @@ export default class ProfileForm extends React.Component<Props, State> {
               ref={this.avatarUrlRef}
             />
           </label>
-          {this.state.errors.avatarUrl && (
-            <span className="block text-red-700">{this.state.errors.avatarUrl}</span>
+          {errors.avatarUrl && (
+            <span className="block text-red-700">{errors.avatarUrl}</span>
           )}
         </div>
         <div className="flex flex-col gap-2 items-start">
           <button
             type="submit"
-            className="bg-gray-50 p-3 border border-sky-900 rounded-lg border-gray-300 focus:border-blue-500"
+            className="
+              p-3
+              bg-gray-50 border rounded-lg border-gray-300
+              focus:border-blue-500
+            "
           >
             Add Profile
           </button>
-          {this.state.isCreated && (
+          {isCreated && (
             <p className="text-green-600">Card is created</p>
           )}
         </div>

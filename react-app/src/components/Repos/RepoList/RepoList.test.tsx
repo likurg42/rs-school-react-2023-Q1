@@ -12,11 +12,10 @@ const mockRepo: RepoTest = {
   topics: ['one', 'two', 'three'],
 };
 
-
 const mockRepos: RepoTest[] = [mockRepo];
 
 it('should render list', () => {
-  render(<RepoList repos={mockRepos}/>);
+  render(<RepoList repos={mockRepos} />);
   const starGazers = screen.queryByText(/9999/i);
   expect(starGazers).toBeVisible();
 });

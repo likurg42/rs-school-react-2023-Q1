@@ -13,7 +13,7 @@ const mockRepo: RepoTest = {
 };
 
 it('should render card', () => {
-  render(<RepoCard repo={mockRepo}/>);
+  render(<RepoCard repo={mockRepo} />);
   const starGazers = screen.queryByText(/9999/i);
   expect(starGazers).toBeVisible();
 });
