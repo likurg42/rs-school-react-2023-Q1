@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { it } from 'vitest';
-import RepoList from './RepoList';
+import { RepoList } from './RepoList';
 
 const mockRepo: RepoTest = {
   id: 1,
