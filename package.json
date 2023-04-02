@@ -1,0 +1,15 @@
+{
+  "name": "rs-school-react-2023-q1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pre-commit-frontend": "npm run pre-commit --prefix react-app"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "husky": "^8.0.3"
+  }
+}
