@@ -1,35 +1,14 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import { describe, it } from 'vitest';
+/* eslint-disable no-return-await */
+import {
+  fireEvent, render, screen, waitFor,
+} from '@testing-library/react';
+import { describe, it, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import Profiles from './Profiles';
-
-const setup = () => {
-  const utils = render(<Profiles />);
-  const name = screen.getByLabelText('Name') as HTMLInputElement;
-  const birthDate = screen.getByLabelText('Birth Date') as HTMLInputElement;
-  const favouriteLanguage = screen.getByLabelText('Favourite Language') as HTMLInputElement;
-  const experience = screen.getByLabelText('Junior') as HTMLInputElement;
-  const avatar = screen.getByLabelText('Upload avatar') as HTMLInputElement;
-  const githubUrl = screen.getByLabelText('Github page') as HTMLInputElement;
-  const submitBtn = screen.getByRole('button');
-  const file = new File(['hello'], 'hello.png', { type: 'image/png' });
-
-  global.URL.createObjectURL = () => 'test url';
-
-  return {
-    name,
-    birthDate,
-    favouriteLanguage,
-    experience,
-    avatar,
-    submitBtn,
-    file,
-    githubUrl,
-    ...utils,
-  };
-};
+import { Profiles } from './Profiles';
 
 describe('profiles', () => {
+  global.URL.createObjectURL = vi.fn();
+
   it('should render empty list', () => {
     render(<Profiles />);
     const noProfiles = screen.queryByText(/No Profiles/i);
@@ -37,28 +16,38 @@ describe('profiles', () => {
   });
 
   it('should add profile', async () => {
-    const {
-      name, birthDate, experience, avatar, submitBtn, file, githubUrl,
-    } = setup();
-    fireEvent.change(name, { target: { value: 'John Smitt' } });
-    expect(name.value).toBe('John Smitt');
+    render(<Profiles />);
 
-    fireEvent.change(birthDate, { target: { value: '1995-01-01' } });
-    fireEvent.change(experience, { target: { checked: true } });
-    fireEvent.change(githubUrl, { target: { value: 'https://github.com' } });
-    fireEvent.click(submitBtn);
+    fireEvent.input(screen.getByRole('textbox', { name: /Name/i }), {
+      target: { value: 'Name' },
+    });
 
-    await userEvent.upload(avatar, file);
+    fireEvent.input(screen.getByLabelText(/Birth Date/i), {
+      target: { value: '1995-01-01' },
+    });
 
-    expect(avatar.files![0]).toStrictEqual(file);
-    expect(avatar.files!.item(0)).toStrictEqual(file);
-    expect(avatar.files).toHaveLength(1);
+    fireEvent.change(screen.getByRole('combobox', { name: /Primary Language/i }), {
+      target: { value: 'PHP' },
+    });
 
-    fireEvent.click(submitBtn);
+    fireEvent.click(screen.getByRole('checkbox', { name: /Contributing to open source/i }));
 
-    expect(name.value).toBe('');
+    fireEvent.click(screen.getByRole('radio', { name: /Senior/i }));
 
-    const description = screen.queryByText(/Javascript Junior developer/i);
-    expect(description).toBeVisible();
+    fireEvent.input(screen.getByRole('textbox', { name: /Github page/i }), {
+      target: { value: 'https://github.com/' },
+    });
+
+    const file = new File(['avatar'], 'avatar.png', { type: 'image/png' });
+    await userEvent.upload(screen.getByLabelText('Upload avatar'), file);
+
+    fireEvent.submit(screen.getByRole('button'));
+    await waitFor(() => expect(screen.queryAllByRole('alert')).toHaveLength(0));
+
+    expect(screen.getByRole('textbox', { name: /Name/i })).toHaveValue('');
+    expect(screen.getByLabelText(/Birth Date/i)).toHaveValue('');
+    expect(screen.getByRole('textbox', { name: /Github page/i })).toHaveValue('');
+
+    expect(screen.getByText(/PHP Open source Senior developer/i)).toBeVisible();
   });
 });

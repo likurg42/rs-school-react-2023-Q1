@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { it } from 'vitest';
-import RepoCard from './RepoCard';
+import { RepoCard } from './RepoCard';
 
 const mockRepo: RepoTest = {
   id: 1,

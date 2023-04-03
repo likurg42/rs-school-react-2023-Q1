@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { it } from 'vitest';
-import App from './App';
+import { App } from './App';
 
 it('should have start application', () => {
   window.history.pushState({}, '', import.meta.env.BASE_URL);

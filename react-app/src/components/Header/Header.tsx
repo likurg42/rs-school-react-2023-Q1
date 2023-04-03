@@ -1,41 +1,38 @@
-import { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
+import clsx from 'clsx';
 import { getHeader } from '../../utils/getHeader';
-import { withLocation } from '../../hoc/withLocation';
 
-interface Props {
-  pathname: string;
-}
+export const Header = () => {
+  const { pathname } = useLocation();
 
-class Header extends Component<Props> {
-  render() {
-    const { pathname } = this.props;
-    return (
-      <header className="container mx-auto mb-12 flex w-full items-center">
-        <h1 className="text-2xl">{getHeader(pathname)}</h1>
-        <nav className="m-4 ml-auto flex justify-end gap-2">
-          <NavLink
-            className={({ isActive }) => (isActive ? 'underline decoration-2 underline-offset-4' : '')}
-            to="/"
-          >
-            Top G
-          </NavLink>
-          <NavLink
-            className={({ isActive }) => (isActive ? 'underline decoration-2 underline-offset-4' : '')}
-            to="/profiles"
-          >
-            Profiles
-          </NavLink>
-          <NavLink
-            className={({ isActive }) => (isActive ? 'underline decoration-2 underline-offset-4' : '')}
-            to="/about"
-          >
-            About
-          </NavLink>
-        </nav>
-      </header>
-    );
-  }
-}
+  const navLinkClass = ({ isActive }: { isActive: boolean }) => clsx(
+    isActive
+    && 'underline decoration-2 underline-offset-4',
+  );
 
-export default withLocation(Header);
+  return (
+    <header className="container p-4 mx-auto mb-12 flex w-full items-center">
+      <h1 className="text-2xl">{getHeader(pathname)}</h1>
+      <nav className="ml-auto flex justify-end gap-2">
+        <NavLink
+          className={navLinkClass}
+          to="/"
+        >
+          Top G
+        </NavLink>
+        <NavLink
+          className={navLinkClass}
+          to="/profiles"
+        >
+          Profiles
+        </NavLink>
+        <NavLink
+          className={navLinkClass}
+          to="/about"
+        >
+          About
+        </NavLink>
+      </nav>
+    </header>
+  );
+};

@@ -37,7 +37,16 @@ rules:
   react/static-property-placement:
     - error
     - 'static public field'
-  # Imports Rules
+  react/function-component-definition:
+    - error
+    - namedComponents: arrow-function
+      unnamedComponents: arrow-function
+  react/require-default-props:
+    - error
+    - functions:
+        defaultArguments
+    # Imports Rules
+  react/jsx-props-no-spreading: off
   import/extensions:
     - error
     - ignorePackages
