@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import clsx from 'clsx';
 import { useForm } from 'react-hook-form';
-import { isAgeUnder18, isValidUrl } from '../../../utils/validation';
+import { isAgeUnder18, isValidUrl, startsWithCapital } from '../../../utils/validation';
 import { ProfileFormModel } from '../../../types/profileForm.model';
 
 interface Props {
@@ -11,10 +11,6 @@ interface Props {
 }
 
 interface State {
-  extraValidation: {
-    birthDate: string;
-    githubUrl: string;
-  };
   isCreated: boolean;
 }
 
@@ -28,15 +24,9 @@ interface FormValues {
   avatarUrl: FileList,
 }
 
-const initialErrors: State['extraValidation'] = {
-  birthDate: '',
-  githubUrl: '',
-};
-
 export const ProfileForm = ({ submit = () => null }: Props) => {
   const [state, setState] = useState<State>({
     isCreated: false,
-    extraValidation: initialErrors,
   });
   const {
     register,
@@ -45,6 +35,7 @@ export const ProfileForm = ({ submit = () => null }: Props) => {
       errors,
     },
     reset,
+    getValues,
   } = useForm<FormValues>();
 
   useEffect(() => {
@@ -64,66 +55,16 @@ export const ProfileForm = ({ submit = () => null }: Props) => {
     }));
   };
 
-  const extraValidation = (profileFormValues: FormValues): boolean => {
-    const {
-      birthDate, githubUrl,
-    } = profileFormValues;
-
-    const extraErrors = { ...initialErrors };
-
-    if (isAgeUnder18(birthDate)) {
-      extraErrors.birthDate = 'User must be at least 18 years old';
-    }
-
-    if (!isValidUrl(githubUrl)) {
-      extraErrors.githubUrl = 'Link must be valid';
-    }
-
-    setState((prevState) => ({ ...prevState, extraValidation: { ...extraErrors } }));
-
-    return Object.values(extraErrors).every((item) => item === '');
-  };
-
   const onSubmit = (data: FormValues) => {
-    if (extraValidation(data)) {
-      showAddedMark();
-      submit({
-        ...data,
-        avatarUrl: URL.createObjectURL(data.avatarUrl[0]),
-      });
-      reset();
-    }
+    showAddedMark();
+    submit({
+      ...data,
+      avatarUrl: URL.createObjectURL(data.avatarUrl[0]),
+    });
+    reset();
   };
 
   const { isCreated } = state;
-
-  const name = register('name', {
-    required: true,
-    maxLength: 30,
-    pattern: /^[A-Z].*/,
-  });
-
-  const birthDate = register('birthDate', {
-    required: true,
-  });
-
-  const primaryLanguage = register('primaryLanguage', {
-    required: true,
-  });
-
-  const opensource = register('opensource');
-
-  const experience = register('experience', {
-    required: true,
-  });
-
-  const githubUrl = register('githubUrl', {
-    required: true,
-  });
-
-  const avatarUrl = register('avatarUrl', {
-    required: true,
-  });
 
   return (
     <form
@@ -138,10 +79,12 @@ export const ProfileForm = ({ submit = () => null }: Props) => {
         <input
           type="text"
           id="name"
-          name={name.name}
-          onChange={name.onChange}
-          onBlur={name.onBlur}
-          ref={name.ref}
+          {...register('name', {
+            required: 'Name is required',
+            maxLength: 30,
+            validate: () => startsWithCapital(getValues('name'))
+              || 'Name should start with capital',
+          })}
           className={clsx(
             'block w-full p-2.5',
             'text-gray-900 text-sm',
@@ -149,37 +92,30 @@ export const ProfileForm = ({ submit = () => null }: Props) => {
             'focus:border-blue-500',
           )}
         />
-        {errors.name && errors.name.type === 'required'
-          && <span className="block text-red-700">Name is required</span>}
-        {errors.name && errors.name.type === 'maxLength'
-          && <span className="block text-red-700">Max length exceeded (30 characters)</span>}
-        {errors.name && errors.name.type === 'pattern'
-          && <span className="block text-red-700">Name should start with capital</span>}
+        {errors.name
+          && <span className="block text-red-700">{errors.name.message}</span>}
       </label>
       <label htmlFor="birthDate" className="flex flex-col">
         <span className="block mb-2 text-sm font-medium text-gray-900">Birth Date</span>
         <input
           type="date"
           id="birthDate"
-          name={birthDate.name}
-          onChange={birthDate.onChange}
-          onBlur={birthDate.onBlur}
-          ref={birthDate.ref}
+          {...register('birthDate', {
+            required: 'Please enter birthdate',
+            validate: (date) => !isAgeUnder18(date) || 'Use must be at least 18 years old',
+          })}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         />
-        {errors.birthDate && errors.birthDate.type === 'required'
-          && <span className="block text-red-700">Birth date is required</span>}
-        {state.extraValidation.birthDate
-          && <span className="block text-red-700">{state.extraValidation.birthDate}</span>}
+        {errors.birthDate
+          && <span className="block text-red-700">{errors.birthDate.message}</span>}
       </label>
       <label htmlFor="primaryLanguage" className="flex flex-col">
         <span className="block mb-2 text-sm font-medium text-gray-900">Primary Language</span>
         <select
           id="primaryLanguage"
-          name={primaryLanguage.name}
-          onChange={primaryLanguage.onChange}
-          onBlur={primaryLanguage.onBlur}
-          ref={primaryLanguage.ref}
+          {...register('primaryLanguage', {
+            required: 'Primary language is required',
+          })}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         >
           <option value="Javascript">Javascript</option>
@@ -187,17 +123,14 @@ export const ProfileForm = ({ submit = () => null }: Props) => {
           <option value="PHP">PHP</option>
           <option value="Python">Python</option>
         </select>
-        {errors.primaryLanguage && errors.primaryLanguage.type === 'required'
-          && <span className="block text-red-700">Primary language is required</span>}
+        {errors.primaryLanguage
+          && <span className="block text-red-700">{errors.primaryLanguage.message}</span>}
       </label>
       <label htmlFor="opensource" className="flex items-center gap-2">
         <input
           type="checkbox"
           id="opensource"
-          name={opensource.name}
-          onChange={opensource.onChange}
-          onBlur={opensource.onBlur}
-          ref={opensource.ref}
+          {...register('opensource')}
           className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 "
         />
         <span
@@ -215,10 +148,9 @@ export const ProfileForm = ({ submit = () => null }: Props) => {
         <label htmlFor="experience-junior" className="flex items-center gap-2">
           <input
             type="radio"
-            name={experience.name}
-            onChange={experience.onChange}
-            onBlur={experience.onBlur}
-            ref={experience.ref}
+            {...register('experience', {
+              required: 'Experience is required',
+            })}
             id="experience-junior"
             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 "
             value="Junior"
@@ -228,10 +160,9 @@ export const ProfileForm = ({ submit = () => null }: Props) => {
         <label htmlFor="experience-middle" className="flex items-center gap-2">
           <input
             type="radio"
-            name={experience.name}
-            onChange={experience.onChange}
-            onBlur={experience.onBlur}
-            ref={experience.ref}
+            {...register('experience', {
+              required: 'Experience is required',
+            })}
             id="experience-middle"
             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
             value="Middle"
@@ -241,10 +172,9 @@ export const ProfileForm = ({ submit = () => null }: Props) => {
         <label htmlFor="experience-senior" className="flex items-center gap-2">
           <input
             type="radio"
-            name={experience.name}
-            onChange={experience.onChange}
-            onBlur={experience.onBlur}
-            ref={experience.ref}
+            {...register('experience', {
+              required: 'Experience is required',
+            })}
             id="experience-senior"
             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
             value="Senior"
@@ -252,7 +182,7 @@ export const ProfileForm = ({ submit = () => null }: Props) => {
           Senior
         </label>
         {errors.experience && (
-          <span className="block text-red-700">Experience is required</span>
+          <span className="block text-red-700">{errors.experience.message}</span>
         )}
       </div>
       <label htmlFor="githubUrl" className="flex flex-col gap-2">
@@ -264,14 +194,14 @@ export const ProfileForm = ({ submit = () => null }: Props) => {
         <input
           type="text"
           id="githubUrl"
-          name={githubUrl.name}
-          onChange={githubUrl.onChange}
-          onBlur={githubUrl.onBlur}
-          ref={githubUrl.ref}
+          {...register('githubUrl', {
+            required: 'Profile url is required',
+            validate: () => isValidUrl(getValues('githubUrl')) || 'URL must be valid',
+          })}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         />
         {errors.githubUrl && (
-          <span className="text-red-700">Github url is required</span>
+          <span className="text-red-700">{errors.githubUrl.message}</span>
         )}
       </label>
       <div className="flex flex-col gap-2">
@@ -289,14 +219,13 @@ export const ProfileForm = ({ submit = () => null }: Props) => {
             accept="image/*"
             id="avatarUrl"
             className="hidden"
-            name={avatarUrl.name}
-            onChange={avatarUrl.onChange}
-            onBlur={avatarUrl.onBlur}
-            ref={avatarUrl.ref}
+            {...register('avatarUrl', {
+              required: 'Avatar is required',
+            })}
           />
         </label>
         {errors.avatarUrl && (
-          <span className="block text-red-700">Avatar url is required</span>
+          <span className="block text-red-700">{errors.avatarUrl.message}</span>
         )}
       </div>
       <div className="flex flex-col gap-2 items-start">

@@ -41,11 +41,12 @@ rules:
     - error
     - namedComponents: arrow-function
       unnamedComponents: arrow-function
-  "react/require-default-props":
+  react/require-default-props:
     - error
     - functions:
         defaultArguments
     # Imports Rules
+  react/jsx-props-no-spreading: off
   import/extensions:
     - error
     - ignorePackages
