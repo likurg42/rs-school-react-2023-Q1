@@ -93,7 +93,7 @@ export const ProfileForm = ({ submit = () => null }: Props) => {
           )}
         />
         {errors.name
-          && <span className="block text-red-700">{errors.name.message}</span>}
+          && <span role="alert" className="block text-red-700">{errors.name.message}</span>}
       </label>
       <label htmlFor="birthDate" className="flex flex-col">
         <span className="block mb-2 text-sm font-medium text-gray-900">Birth Date</span>
@@ -107,7 +107,7 @@ export const ProfileForm = ({ submit = () => null }: Props) => {
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         />
         {errors.birthDate
-          && <span className="block text-red-700">{errors.birthDate.message}</span>}
+          && <span role="alert" className="block text-red-700">{errors.birthDate.message}</span>}
       </label>
       <label htmlFor="primaryLanguage" className="flex flex-col">
         <span className="block mb-2 text-sm font-medium text-gray-900">Primary Language</span>
@@ -124,7 +124,7 @@ export const ProfileForm = ({ submit = () => null }: Props) => {
           <option value="Python">Python</option>
         </select>
         {errors.primaryLanguage
-          && <span className="block text-red-700">{errors.primaryLanguage.message}</span>}
+          && <span role="alert" className="block text-red-700">{errors.primaryLanguage.message}</span>}
       </label>
       <label htmlFor="opensource" className="flex items-center gap-2">
         <input
@@ -182,7 +182,7 @@ export const ProfileForm = ({ submit = () => null }: Props) => {
           Senior
         </label>
         {errors.experience && (
-          <span className="block text-red-700">{errors.experience.message}</span>
+          <span role="alert" className="block text-red-700">{errors.experience.message}</span>
         )}
       </div>
       <label htmlFor="githubUrl" className="flex flex-col gap-2">
@@ -201,7 +201,7 @@ export const ProfileForm = ({ submit = () => null }: Props) => {
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         />
         {errors.githubUrl && (
-          <span className="text-red-700">{errors.githubUrl.message}</span>
+          <span role="alert" className="text-red-700">{errors.githubUrl.message}</span>
         )}
       </label>
       <div className="flex flex-col gap-2">
@@ -225,7 +225,7 @@ export const ProfileForm = ({ submit = () => null }: Props) => {
           />
         </label>
         {errors.avatarUrl && (
-          <span className="block text-red-700">{errors.avatarUrl.message}</span>
+          <span role="alert" className="block text-red-700">{errors.avatarUrl.message}</span>
         )}
       </div>
       <div className="flex flex-col gap-2 items-start">
