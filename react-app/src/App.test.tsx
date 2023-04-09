@@ -1,10 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import { it } from 'vitest';
 import { App } from './App';
+import RepoContextProvider from './context/RepoContext';
 
 it('should have start application', () => {
   window.history.pushState({}, '', import.meta.env.BASE_URL);
-  render(<App />);
+  render(
+    <RepoContextProvider>
+      <App />
+    </RepoContextProvider>
+  );
   const titleOnScreen = screen.queryByText(/Top G's/i);
   expect(titleOnScreen).toBeVisible();
 });

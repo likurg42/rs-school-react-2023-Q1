@@ -24,11 +24,12 @@ plugins:
   - react
   - react-hooks
 rules:
-  comma-dangle:
-    - error
-    - only-multiline
+  comma-dangle: off
+  "@typescript-eslint/comma-dangle": off
   # React Rules
-  react/prop-types: 'off'
+  react/prop-types: off
+  # .defaultProps deprecated for functional components
+  react/require-default-props: off
   react/display-name: 'off'
   react/jsx-uses-react: 'off'
   react/react-in-jsx-scope: 'off'
@@ -41,12 +42,8 @@ rules:
     - error
     - namedComponents: arrow-function
       unnamedComponents: arrow-function
-  react/require-default-props:
-    - error
-    - functions:
-        defaultArguments
-    # Imports Rules
   react/jsx-props-no-spreading: off
+  # Imports Rules
   import/extensions:
     - error
     - ignorePackages

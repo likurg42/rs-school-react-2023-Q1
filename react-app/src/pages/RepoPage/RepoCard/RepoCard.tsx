@@ -1,4 +1,3 @@
-import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { StarIcon } from '@heroicons/react/24/solid';
 
