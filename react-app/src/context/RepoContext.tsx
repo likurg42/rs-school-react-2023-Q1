@@ -11,24 +11,23 @@ type RepoContextValue = {
 
 export const RepoContext = createContext<RepoContextValue | null>(null);
 
-const inititalValues = { keyword: '', language: 'javascript' };
+const initialValues = { keyword: '', language: 'javascript' };
 
 const RepoContextProvider = ({ children }: PropsWithChildren) => {
-  const [keywordStored, setKeywordStored] = useLocalStorage<string>('repoFilter.keyword', inititalValues.keyword);
-  const [languageStored, setLanguageStored] = useLocalStorage<string>('repoFilter.language', inititalValues.language);
+  const [storedFilter, setStoredFilter] = useLocalStorage<RepoFilter>('repoFilter', useMemo(() => initialValues, []));
+
   const [filter, setFilter] = useState<RepoFilter>({
-    keyword: keywordStored,
-    language: languageStored
+    keyword: storedFilter.keyword,
+    language: storedFilter.language
   });
 
   const updateFilter = useCallback((newFilter: RepoFilter) => {
-    setLanguageStored(newFilter.language);
-    setKeywordStored(newFilter.keyword);
+    setStoredFilter(newFilter);
     setFilter((prevState) => ({
       ...prevState,
       ...newFilter,
     }));
-  }, [setKeywordStored, setLanguageStored]);
+  }, [setStoredFilter]);
 
   const contextValue = useMemo(() => ({
     filter,

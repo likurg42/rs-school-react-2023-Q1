@@ -11,7 +11,6 @@ const Repos = () => {
   const { filter } = useRepoContext();
   const response = useData<Response>(routes.githubApi(filter));
   const repos = response ? response.read() : null;
-
   return repos && <RepoList repos={repos.items} />;
 };
 
