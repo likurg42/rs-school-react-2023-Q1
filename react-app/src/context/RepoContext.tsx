@@ -2,11 +2,7 @@ import {
   createContext, PropsWithChildren, useCallback, useMemo, useState,
 } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
-
-type RepoFilter = {
-  keyword: string;
-  language: string;
-};
+import { RepoFilter } from '../types/filter-repo';
 
 type RepoContextValue = {
   filter: RepoFilter,

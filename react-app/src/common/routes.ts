@@ -1,10 +1,12 @@
+import { RepoFilter } from '../types/filter-repo';
+
 const GITHUB_API = 'https://api.github.com';
 
 const buildApiRoute = (
   path: string,
-  { keyword, language }: { keyword: string, language: string; }
+  filter: RepoFilter
 ) => {
-  const q = [keyword, language].filter((item) => item !== '').join('+');
+  const q = Object.values(filter).filter((item) => item !== '').join('+');
   const params = {
     q,
     o: 'desc',
@@ -20,5 +22,5 @@ const buildApiRoute = (
 };
 
 export const routes = {
-  githubApi: (keyword: string, language: string) => buildApiRoute('/search/repositories', { keyword, language }),
+  githubApi: (filter: RepoFilter) => buildApiRoute('/search/repositories', filter),
 };
