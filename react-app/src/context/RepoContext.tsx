@@ -19,7 +19,7 @@ const inititalValues = { keyword: '', language: 'javascript' };
 
 const RepoContextProvider = ({ children }: PropsWithChildren) => {
   const [keywordStored, setKeywordStored] = useLocalStorage<string>('repoFilter.keyword', inititalValues.keyword);
-  const [languageStored, setLanguageStored] = useLocalStorage<string>('repoFilter.language', inititalValues.keyword);
+  const [languageStored, setLanguageStored] = useLocalStorage<string>('repoFilter.language', inititalValues.language);
   const [filter, setFilter] = useState<RepoFilter>({
     keyword: keywordStored,
     language: languageStored

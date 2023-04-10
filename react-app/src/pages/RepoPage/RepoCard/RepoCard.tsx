@@ -15,6 +15,10 @@ export const RepoCard = ({ repo }: Props) => {
     topics,
   } = repo;
 
+  const parsedDescription = description.length > 250
+    ? description.slice(0, 350).concat('...')
+    : description;
+
   return (
     <div
       className="flex h-full flex-col items-center justify-center gap-2 overflow-hidden rounded-lg border-2 border-gray-200 border-opacity-60 bg-gray-100 bg-opacity-75 p-4"
@@ -45,7 +49,7 @@ export const RepoCard = ({ repo }: Props) => {
       >
         {full_name}
       </a>
-      <p className="text-center">{description}</p>
+      <p className="text-center">{parsedDescription}</p>
       <p className="flex items-center gap-2">
         {stargazers_count}
         <StarIcon className="h-4 w-4" />
