@@ -12,9 +12,7 @@ export const RepoPage = () => (
     </Hero>
     <main>
       <ErrorBoundary fallback={(
-        <p>
-          Too many requests, so github api blocks you for couple of minutes
-        </p>
+        <p>Too many requests, so github api blocks you for couple of minutes</p>
       )}
       >
         <Suspense fallback={<LoadingSpinner />}>

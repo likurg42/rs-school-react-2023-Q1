@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { it } from 'vitest';
-import { RepoCard } from './RepoCard';
+import Modal from './Modal';
 
 const mockRepo: Repo = {
   id: 1,
@@ -22,8 +22,8 @@ const mockRepo: Repo = {
   }
 };
 
-it('should render card', () => {
-  render(<RepoCard repo={mockRepo} handleModal={vi.fn()} />);
+it('should render modal', () => {
+  render(<Modal repo={mockRepo} isOpen toggle={vi.fn()} />);
   const starGazers = screen.queryByText(/9999/i);
   expect(starGazers).toBeVisible();
 });

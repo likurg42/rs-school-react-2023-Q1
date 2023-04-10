@@ -15,10 +15,8 @@ const client = <T>(endpoint: string, { body, ...customConfig }: Partial<CustomCo
       ...headers,
       ...customConfig.headers,
     },
+    body: JSON.stringify(body)
   };
-  if (body) {
-    config.body = JSON.stringify(body);
-  }
 
   return fetch(endpoint, config)
     .then(async (response) => {
