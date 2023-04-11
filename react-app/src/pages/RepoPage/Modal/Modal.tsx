@@ -80,8 +80,12 @@ const Modal = ({ repo, isOpen, toggle }: Props) => {
         <p>{parsedDescription}</p>
         <p>{`Size: ${size} KB`}</p>
         <p className="flex items-center gap-2">
-          <ClipboardDocumentCheckIcon className="h-4 w-4" />
-          {license.name}
+          {license && (
+            <>
+              <ClipboardDocumentCheckIcon className="h-4 w-4" />
+              {license.name}
+            </>
+          )}
           <StarIcon className="h-4 w-4" />
           {stargazers_count}
           <ArrowUturnRightIcon className="h-4 w-4" />

@@ -9,10 +9,7 @@ import { RepoFilter } from '../../../types/filter-repo';
 
 export const SearchForm = () => {
   const { filter, updateFilter } = useRepoContext();
-  const [filterStored, setFilterStored] = useLocalStorage<RepoFilter>('searchForm', useMemo(() => ({
-    keyword: filter.keyword,
-    language: filter.language,
-  }), [filter]));
+  const [filterStored, setFilterStored] = useLocalStorage<RepoFilter>('searchForm', useMemo(() => (filter), [filter]));
   const {
     register,
     handleSubmit,
