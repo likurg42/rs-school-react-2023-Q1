@@ -21,11 +21,12 @@ export function suspensify<T>(promise: Promise<T>) {
     read() {
       if (status === 'pending') {
         throw suspender;
-      } else if (status === 'error') {
+      }
+
+      if (status === 'error') {
         throw result;
       }
 
-      // success
       return result;
     },
   };

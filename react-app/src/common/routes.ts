@@ -22,5 +22,5 @@ const buildApiRoute = (
 };
 
 export const routes = {
-  githubApi: (filter: RepoFilter) => buildApiRoute('/search/repositories', filter),
+  githubApi: (filter: RepoFilter = { keyword: '', language: 'javascript' }) => buildApiRoute('/search/repositories', filter),
 };

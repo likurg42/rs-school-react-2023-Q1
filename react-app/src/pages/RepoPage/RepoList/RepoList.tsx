@@ -16,6 +16,5 @@ export const RepoList = ({ repos }: Props) => {
       {modalState.isOpen
         && <Modal isOpen={modalState.isOpen} repo={modalState.data} toggle={toggle} />}
     </>
-
   );
 };
