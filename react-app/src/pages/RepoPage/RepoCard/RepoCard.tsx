@@ -1,12 +1,13 @@
-import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { StarIcon } from '@heroicons/react/24/solid';
+import Button from '../../../components/Button/Button';
 
 interface Props {
-  repo: Repo | RepoTest;
+  repo: Repo;
+  handleModal: (isOpen: boolean, data: Repo) => void;
 }
 
-export const RepoCard = ({ repo }: Props) => {
+export const RepoCard = ({ repo, handleModal }: Props) => {
   const {
     name,
     description,
@@ -15,6 +16,10 @@ export const RepoCard = ({ repo }: Props) => {
     stargazers_count,
     topics,
   } = repo;
+
+  const parsedDescription = description.length > 250
+    ? description.slice(0, 350).concat('...')
+    : description;
 
   return (
     <div
@@ -29,7 +34,7 @@ export const RepoCard = ({ repo }: Props) => {
             {topic}
           </span>
         ))}
-        {topics?.length === 0 && (
+        {topics.length === 0 && (
           <span
             className="text-xs font-medium tracking-widest text-gray-400 title-font"
           >
@@ -46,10 +51,17 @@ export const RepoCard = ({ repo }: Props) => {
       >
         {full_name}
       </a>
-      <p className="text-center">{description}</p>
+      <p className="text-center">{parsedDescription}</p>
       <p className="flex items-center gap-2">
         {stargazers_count}
         <StarIcon className="h-4 w-4" />
+      </p>
+      <p className="mt-auto">
+        <Button
+          onClick={() => handleModal(true, repo)}
+        >
+          More
+        </Button>
       </p>
     </div>
   );

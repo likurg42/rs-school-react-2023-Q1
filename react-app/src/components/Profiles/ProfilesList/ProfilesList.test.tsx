@@ -1,18 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it } from 'vitest';
 import { ProfilesList } from './ProfilesList';
+import { mockProfile } from '../../../test/mocks/mockProfile';
 import { ProfileModel } from '../../../types/profile.model';
-
-const mockProfile: ProfileModel = {
-  id: '1',
-  name: 'John Smith',
-  primaryLanguage: 'Javascript',
-  opensource: true,
-  experience: 'Junior',
-  avatarUrl: 'https://picsum.photos/100/100',
-  birthDate: new Date(),
-  githubUrl: 'https://github.com/',
-};
 
 const mockProfiles: ProfileModel[] = [mockProfile];
 
@@ -25,7 +15,7 @@ describe('profile list', () => {
 
   it('should render profile list', () => {
     render(<ProfilesList profiles={mockProfiles} />);
-    const name = screen.queryByText(/John Smith/i);
+    const name = screen.getByText(/John Smith/i);
     expect(name).toBeVisible();
 
     const primaryLanguage = screen.queryByText(/Javascript/i);

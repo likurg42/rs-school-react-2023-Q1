@@ -4,7 +4,7 @@ declare interface SearchResult {
   items: Repo[],
 }
 
-declare interface RepoTest {
+declare interface Repo {
   id: number;
   name: string;
   description: string;
@@ -12,9 +12,13 @@ declare interface RepoTest {
   html_url: string;
   stargazers_count: string;
   topics: string[];
+  owner: Pick<Owner, 'avatar_url', 'login', 'type'>;
+  size: number;
+  license: Pick<License, 'name'>;
+  forks_count: number;
 }
 
-declare interface Repo {
+interface RepoExample {
   id: number;
   node_id: string;
   name: string;
