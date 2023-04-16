@@ -1,4 +1,4 @@
-const LoadingSpinner = () => (
+export const LoadingSpinner = () => (
   <div role="status">
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,5 +19,3 @@ const LoadingSpinner = () => (
     <span className="sr-only">Loading...</span>
   </div>
 );
-
-export default LoadingSpinner;

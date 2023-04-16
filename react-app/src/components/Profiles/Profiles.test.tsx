@@ -4,19 +4,29 @@ import {
 } from '@testing-library/react';
 import { describe, it, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
+import { Provider as ReduxProvider } from 'react-redux';
 import { Profiles } from './Profiles';
+import { store } from '../../store';
 
 describe('profiles', () => {
   global.URL.createObjectURL = vi.fn();
 
   it('should render empty list', () => {
-    render(<Profiles />);
+    render(
+      <ReduxProvider store={store}>
+        <Profiles />
+      </ReduxProvider>
+    );
     const noProfiles = screen.queryByText(/No Profiles/i);
     expect(noProfiles).toBeVisible();
   });
 
   it('should add profile', async () => {
-    render(<Profiles />);
+    render(
+      <ReduxProvider store={store}>
+        <Profiles />
+      </ReduxProvider>
+    );
 
     fireEvent.input(screen.getByRole('textbox', { name: /Name/i }), {
       target: { value: 'Name' },

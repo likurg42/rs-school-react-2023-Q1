@@ -1,4 +1,3 @@
-import React from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { RepoPage } from './pages/RepoPage/RepoPage';
 import { AboutPage } from './pages/AboutPage/AboutPage';

@@ -1,11 +1,16 @@
 import { RepoFilter } from '../types/filter-repo';
 
-const GITHUB_API = 'https://api.github.com';
+export const GITHUB_API = 'https://api.github.com';
 
-const buildApiRoute = (
-  path: string,
-  filter: RepoFilter
-) => {
+export type GithubSearchParams = {
+  q: string,
+  o: string,
+  sort: string,
+  page: string,
+  per_page: string,
+};
+
+export const buildSearchParams = (filter: RepoFilter) => {
   const q = Object.values(filter).filter((item) => item !== '').join('+');
   const params = {
     q,
@@ -14,7 +19,14 @@ const buildApiRoute = (
     page: '1',
     per_page: '20',
   };
+  return params;
+};
 
+const buildApiRoute = (
+  path: string,
+  filter: RepoFilter
+) => {
+  const params = buildSearchParams(filter);
   const searchParams = new URLSearchParams(params);
   const url = new URL(path, GITHUB_API);
   url.search = searchParams.toString();
@@ -22,5 +34,7 @@ const buildApiRoute = (
 };
 
 export const routes = {
+  githubApiUrl: () => GITHUB_API,
+  githubApiRepoPath: () => 'search/repositories',
   githubApi: (filter: RepoFilter = { keyword: '', language: 'javascript' }) => buildApiRoute('/search/repositories', filter),
 };

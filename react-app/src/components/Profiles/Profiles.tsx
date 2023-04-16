@@ -1,42 +1,33 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { v4 as genId } from 'uuid';
-import { ProfileModel } from '../../types/profile.model';
 import { ProfileForm } from './ProfileForm/ProfileForm';
 import { ProfilesList } from './ProfilesList/ProfilesList';
 import { ProfileFormModel } from '../../types/profileForm.model';
-
-interface State {
-  profiles: ProfileModel[];
-}
+import { useProfile } from '../../hooks/useProfile';
 
 export const Profiles = () => {
-  const [state, setState] = useState<State>({
-    profiles: [],
-  });
+  const { addProfile: adddProfile, profileList } = useProfile();
 
-  const addProfile = useCallback((profileFormValues: ProfileFormModel): void => {
+  const createProfile = useCallback((profileFormValues: ProfileFormModel): void => {
     const { birthDate, avatarUrl } = profileFormValues;
 
     const profile = {
       ...profileFormValues,
       id: genId(),
       avatarUrl: avatarUrl === '' ? null : avatarUrl,
-      birthDate: new Date(birthDate),
+      birthDate: new Date(birthDate).toString(),
     };
 
-    setState((prevState) => ({
-      profiles: [...prevState.profiles, profile],
-    }));
-  }, []);
+    adddProfile(profile);
+  }, [adddProfile]);
 
-  const { profiles } = state;
   return (
     <div className="flex flex-wrap gap-8 sm:flex-nowrap">
       <div className="basis-full sm:basis-1/4 lg:basis-1/3">
-        <ProfileForm submit={addProfile} />
+        <ProfileForm submit={createProfile} />
       </div>
       <div className="basis-full flex-grow">
-        <ProfilesList profiles={profiles} />
+        <ProfilesList profiles={profileList} />
       </div>
     </div>
   );

@@ -1,17 +1,18 @@
-import useData from '../../../hooks/useData';
 import useRepoContext from '../../../hooks/useRepoContext';
 import { RepoList } from '../RepoList/RepoList';
-import { routes } from '../../../common/routes';
-
-type Response = {
-  items: Repo[];
-};
+import { buildSearchParams } from '../../../common/routes';
+import { useGetReposQuery } from '../../../store/repoApi';
+import { LoadingSpinner } from '../../../components/LoadingSpinner/LoadingSpinner';
 
 const Repos = () => {
   const { filter } = useRepoContext();
-  const response = useData<Response>(routes.githubApi(filter));
-  const repos = response ? response.read() : null;
-  return repos && <RepoList repos={repos.items} />;
+  const { data, isSuccess, isFetching } = useGetReposQuery(buildSearchParams(filter));
+  return (
+    <>
+      {isFetching && <LoadingSpinner />}
+      {isSuccess && !isFetching && <RepoList repos={data.items} />}
+    </>
+  );
 };
 
 export default Repos;
