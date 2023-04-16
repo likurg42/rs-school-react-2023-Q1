@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "pre-commit-frontend": "npm run pre-commit --prefix react-app"
+    "pre-commit-frontend": "npm run pre-commit --prefix react-app",
+    "postinstall": "cd react-app && npm install"
   },
   "keywords": [],
   "author": "",
