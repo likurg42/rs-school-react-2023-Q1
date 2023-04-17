@@ -1,32 +1,24 @@
 /* eslint-disable no-return-await */
 import {
-  fireEvent, render, screen, waitFor,
+  fireEvent, screen, waitFor,
 } from '@testing-library/react';
 import { describe, it, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import { Provider as ReduxProvider } from 'react-redux';
 import { Profiles } from './Profiles';
-import { store } from '../../store';
+import { renderWithProviders } from '../../test/utils/renderWithProviders';
 
 describe('profiles', () => {
   global.URL.createObjectURL = vi.fn();
 
   it('should render empty list', () => {
-    render(
-      <ReduxProvider store={store}>
-        <Profiles />
-      </ReduxProvider>
-    );
+    renderWithProviders(<Profiles />);
+
     const noProfiles = screen.queryByText(/No Profiles/i);
     expect(noProfiles).toBeVisible();
   });
 
   it('should add profile', async () => {
-    render(
-      <ReduxProvider store={store}>
-        <Profiles />
-      </ReduxProvider>
-    );
+    renderWithProviders(<Profiles />);
 
     fireEvent.input(screen.getByRole('textbox', { name: /Name/i }), {
       target: { value: 'Name' },

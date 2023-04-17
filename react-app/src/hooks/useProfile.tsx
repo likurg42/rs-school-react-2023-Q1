@@ -1,7 +1,7 @@
 import { bindActionCreators } from '@reduxjs/toolkit';
 import { useMemo } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from '../store';
-import { profileActions } from '../store/ProfileSlice';
+import { profileActions } from '../store/slices';
 
 export const useProfile = () => {
   const dispatch = useAppDispatch();

@@ -23,7 +23,7 @@ const mockRepo: Repo = {
 };
 
 it('should render card', () => {
-  render(<RepoCard repo={mockRepo} handleModal={vi.fn()} />);
+  render(<RepoCard repo={mockRepo} open={vi.fn()} />);
   const starGazers = screen.queryByText(/9999/i);
   expect(starGazers).toBeVisible();
 });

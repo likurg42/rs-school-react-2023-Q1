@@ -22,19 +22,9 @@ export const buildSearchParams = (filter: RepoFilter) => {
   return params;
 };
 
-const buildApiRoute = (
-  path: string,
-  filter: RepoFilter
-) => {
-  const params = buildSearchParams(filter);
-  const searchParams = new URLSearchParams(params);
-  const url = new URL(path, GITHUB_API);
-  url.search = searchParams.toString();
-  return url.toString();
-};
-
 export const routes = {
-  githubApiUrl: () => GITHUB_API,
-  githubApiRepoPath: () => 'search/repositories',
-  githubApi: (filter: RepoFilter = { keyword: '', language: 'javascript' }) => buildApiRoute('/search/repositories', filter),
+  api: {
+    root: () => GITHUB_API,
+    repositories: (isFull = false) => (isFull ? `${new URL('search/repositories', GITHUB_API)}` : 'search/repositories'),
+  }
 };

@@ -1,35 +1,32 @@
 import { useForm } from 'react-hook-form';
-import { useEffect, useMemo } from 'react';
-import useRepoContext from '../../../hooks/useRepoContext';
+import { useEffect } from 'react';
 import Input from '../../../components/Input/Input';
-import useLocalStorage from '../../../hooks/useLocalStorage';
 import Button from '../../../components/Button/Button';
 import Form from '../../../components/Form/Form';
 import { RepoFilter } from '../../../types/filter-repo';
+import { useRepositories } from '../../../hooks/useRepositories';
 
 export const SearchForm = () => {
-  const { filter, updateFilter } = useRepoContext();
-  const [filterStored, setFilterStored] = useLocalStorage<RepoFilter>('searchForm', useMemo(() => (filter), [filter]));
+  const { inputFilter, updateCurrentFilter, updateInputFilter } = useRepositories();
   const {
     register,
     handleSubmit,
     getValues
   } = useForm<RepoFilter>({
-    defaultValues: {
-      language: filterStored.language,
-      keyword: filterStored.keyword,
-    },
+    defaultValues: inputFilter,
   });
 
   const onSubmit = (data: RepoFilter) => {
-    updateFilter(data);
-    setFilterStored(data);
+    updateCurrentFilter(data);
+    updateInputFilter(data);
   };
 
-  useEffect(() => () => setFilterStored({
-    keyword: getValues('keyword'),
-    language: getValues('language'),
-  }), [getValues, setFilterStored]);
+  useEffect(() => () => {
+    updateInputFilter({
+      keyword: getValues('keyword'),
+      language: getValues('language'),
+    });
+  }, [getValues, updateInputFilter]);
 
   return (
     <Form handleSubmit={handleSubmit(onSubmit)}>

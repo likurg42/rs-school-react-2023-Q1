@@ -1,13 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { GithubSearchParams, routes } from '../common/routes';
+import { GithubSearchParams, routes } from '../../common/routes';
 
 export const repoApi = createApi({
   reducerPath: 'repoApi',
-  baseQuery: fetchBaseQuery({ baseUrl: routes.githubApiUrl() }),
+  keepUnusedDataFor: process.env.NODE_ENV === 'test' ? 0 : 60,
+  baseQuery: fetchBaseQuery({ baseUrl: routes.api.root() }),
   endpoints: (build) => ({
     getRepos: build.query<{ items: Repo[]; }, GithubSearchParams>({
       query: (filter: GithubSearchParams) => ({
-        url: routes.githubApiRepoPath(),
+        url: routes.api.repositories(),
         method: 'GET',
         params: { ...filter },
       }),

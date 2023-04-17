@@ -4,10 +4,10 @@ import Button from '../../../components/Button/Button';
 
 interface Props {
   repo: Repo;
-  handleModal: (isOpen: boolean, data: Repo) => void;
+  open: () => void;
 }
 
-export const RepoCard = ({ repo, handleModal }: Props) => {
+export const RepoCard = ({ repo, open }: Props) => {
   const {
     name,
     description,
@@ -58,7 +58,7 @@ export const RepoCard = ({ repo, handleModal }: Props) => {
       </p>
       <p className="mt-auto">
         <Button
-          onClick={() => handleModal(true, repo)}
+          onClick={open}
         >
           More
         </Button>

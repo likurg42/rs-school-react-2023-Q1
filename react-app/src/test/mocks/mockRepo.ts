@@ -1,7 +1,7 @@
 export const mockRepo: Repo = {
   id: 1,
   name: 'Some repo',
-  description: 'You should starve',
+  description: 'Very cool repo',
   full_name: '@somedude/some-repo',
   html_url: 'https://my-repo.com',
   stargazers_count: '9999',

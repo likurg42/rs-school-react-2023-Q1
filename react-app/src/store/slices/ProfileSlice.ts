@@ -2,7 +2,7 @@ import {
   createSlice,
   PayloadAction
 } from '@reduxjs/toolkit';
-import { ProfileModel } from '../types/profile.model';
+import { ProfileModel } from '../../types/profile.model';
 
 type ProfileState = {
   list: ProfileModel[],

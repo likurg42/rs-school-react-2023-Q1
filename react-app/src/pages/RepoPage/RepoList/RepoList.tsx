@@ -11,10 +11,18 @@ export const RepoList = ({ repos }: Props) => {
   return (
     <>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {repos && repos.map((repo) => <RepoCard key={repo.id} repo={repo} handleModal={toggle} />)}
+        {repos.length
+          ? repos.map((repo) => (
+            <RepoCard
+              key={repo.id}
+              repo={repo}
+              open={() => toggle(true, repos.find((currRepo) => currRepo.id === repo.id))}
+            />
+          ))
+          : <p className="text-center justify-self-end">No repositories found</p>}
       </div>
       {modalState.isOpen
-        && <Modal isOpen={modalState.isOpen} repo={modalState.data} toggle={toggle} />}
+        && <Modal isOpen={modalState.isOpen} repo={modalState.data} close={() => toggle(false)} />}
     </>
   );
 };
