@@ -1,10 +1,10 @@
-export interface ProfileModel {
+export type ProfileModel = {
   id: string;
   name: string;
-  birthDate: Date;
+  birthDate: string;
   primaryLanguage: string;
   opensource: boolean;
   experience: string;
   avatarUrl: string | null;
   githubUrl: string;
-}
+};

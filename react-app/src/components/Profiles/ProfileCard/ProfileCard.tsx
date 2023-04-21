@@ -22,7 +22,7 @@ export const ProfileCard = (props: Props) => {
 
   const description = `${primaryLanguage}${opensource ? ' Open source' : ' '} ${experience} developer`;
 
-  const age = `${getAge(birthDate.toDateString())} years old`;
+  const age = `${getAge(birthDate)} years old`;
   const avatarSrc = avatarUrl ?? defaultAvatar;
 
   return (

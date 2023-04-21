@@ -7,6 +7,6 @@ export const mockProfile: ProfileModel = {
   opensource: true,
   experience: 'Junior',
   avatarUrl: 'https://picsum.photos/100/100',
-  birthDate: new Date(),
+  birthDate: '1995-01-01',
   githubUrl: 'https://github.com/',
 };

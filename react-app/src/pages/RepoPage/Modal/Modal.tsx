@@ -14,17 +14,17 @@ import Button from '../../../components/Button/Button';
 type Props = {
   repo: Repo | null;
   isOpen: boolean;
-  toggle: (isOpen: boolean) => void;
+  close: () => void;
 };
 
-const Modal = ({ repo, isOpen, toggle }: Props) => {
+const Modal = ({ repo, isOpen, close }: Props) => {
   const outside = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = useCallback((event: Event) => {
     if (!outside.current?.contains(event.target as Node)) {
-      toggle(false);
+      close();
     }
-  }, [toggle]);
+  }, [close]);
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside, true);
@@ -131,7 +131,7 @@ const Modal = ({ repo, isOpen, toggle }: Props) => {
         ref={outside}
       >
         <p className="text-right">
-          <Button onClick={() => toggle(false)}>Close</Button>
+          <Button onClick={close}>Close</Button>
         </p>
         {repo && renderInfo(repo)}
       </div>
