@@ -79,4 +79,5 @@ ignorePatterns:
   - "dist"
   - "coverage"
   - "dist"
+  - "server.ts"
 ...
