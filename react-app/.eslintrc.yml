@@ -81,4 +81,6 @@ ignorePatterns:
   - "coverage"
   - "dist"
   - "server.ts"
+  - "cypress"
+  - "cypress.config.ts"
 ...

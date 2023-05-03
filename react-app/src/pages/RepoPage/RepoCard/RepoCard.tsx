@@ -24,6 +24,7 @@ export const RepoCard = ({ repo, open }: Props) => {
   return (
     <div
       className="flex h-full flex-col items-center justify-center gap-2 overflow-hidden rounded-lg border-2 border-gray-200 border-opacity-60 bg-gray-100 bg-opacity-75 p-4"
+      data-testid="repo-card"
     >
       <p className="flex flex-wrap justify-center gap-2">
         {topics && topics.map((topic) => (

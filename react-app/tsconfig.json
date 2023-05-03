@@ -42,7 +42,8 @@
     "node_modules",
     "dist",
     "coverage",
-    "dist"
+    "dist",
+    "cypress"
   ],
   "references": [
     {
