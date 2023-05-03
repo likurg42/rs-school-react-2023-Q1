@@ -10,7 +10,7 @@ export const RepoList = ({ repos }: Props) => {
   const { modalState, toggle } = useModal<Repo>();
   return (
     <>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-repo-list>
         {repos.length
           ? repos.map((repo) => (
             <RepoCard

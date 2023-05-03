@@ -36,17 +36,23 @@
   },
   "include": [
     "./src/**/*",
-    "styled.d.ts"
+    "styled.d.ts",
   ],
   "exclude": [
     "node_modules",
     "dist",
     "coverage",
-    "dist"
+    "dist",
+    "cypress"
   ],
   "references": [
     {
       "path": "./tsconfig.node.json"
     }
-  ]
+  ],
+  "ts-node": {
+    "esm": true,
+    "swc": true,
+    "experimentalSpecifierResolution": "node"
+  }
 }

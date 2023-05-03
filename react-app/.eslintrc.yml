@@ -52,6 +52,7 @@ rules:
       ts: never
       tsx: never
   import/prefer-default-export: off
+  no-underscore-dangle: off
   # Typescript Rules
   "@typescript-eslint/explicit-function-return-type": 'off'
   "@typescript-eslint/interface-name-prefix": 'off'
@@ -79,4 +80,7 @@ ignorePatterns:
   - "dist"
   - "coverage"
   - "dist"
+  - "server.ts"
+  - "cypress"
+  - "cypress.config.ts"
 ...

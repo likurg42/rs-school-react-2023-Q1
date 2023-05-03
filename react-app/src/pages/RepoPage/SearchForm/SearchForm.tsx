@@ -33,12 +33,16 @@ export const SearchForm = () => {
       <Input
         label="Keyword"
         {...register('keyword')}
+        data-testid="keyword"
       />
       <Input
         label="Language"
         {...register('language')}
       />
-      <Button isSubmit>
+      <Button
+        isSubmit
+        data-testid="search"
+      >
         Search
       </Button>
     </Form>
